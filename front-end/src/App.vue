@@ -1,8 +1,30 @@
+
 <template>
-  <router-view/>
+  <div class="main-container">
+    <side-nav />
+    <div class="content-container">
+      <top-menu />
+      <main-content-view/>
+    </div>
+  </div>
 </template>
 
-<style>
+<script setup>
+import SideNav from "@/components/SideNav.vue";
+import TopMenu from "@/components/TopMenu.vue";
+import MainContentView from "@/views/MainContentView.vue";
+</script>
+
+
+<style scoped>
+.main-container {
+  display: flex;
+}
+
+.content-container {
+  flex: 1; /* 让内容容器占据剩余空间 */
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,5 +44,5 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-}
+} 
 </style>

@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "fengye7Font";
+  src: url(../assets/fonts/fengye7-qingxin.ttf) format("truetype");
+}
+.fengye7Font {
+  font-family: "fengye7Font";
+  font-size: 1em;
+  font-weight: bold;
+  color: #1a3a56;
+}

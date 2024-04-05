@@ -7,7 +7,7 @@
     <el-container style="height: 100%;">
       <el-header>
         <el-icon class="nav-icon"><Menu /></el-icon>
-        <el-text v-show="showNav || fixedNav">YacBugzillaKMap</el-text>
+        <el-text v-show="showNav || fixedNav">TestPlatform</el-text>
       </el-header>
       <el-container style="height: 100%;">
         <el-menu default-active="1" class="el-menu-vertical-demo">
@@ -15,15 +15,19 @@
             <el-icon class="nav-icon"><Guide /></el-icon>
             <el-text v-show="showNav || fixedNav">项目设置</el-text>
           </el-menu-item>
-          <el-menu-item index="2" @click="updateSidebarSelection('单元测试')">
+          <el-menu-item index="2" @click="updateSidebarSelection('一般测试')">
+            <el-icon class="nav-icon"><Document /></el-icon>
+            <el-text v-show="showNav || fixedNav">一般测试</el-text>
+          </el-menu-item>
+          <el-menu-item index="3" @click="updateSidebarSelection('单元测试')">
             <el-icon class="nav-icon"><Aim /></el-icon>
             <el-text v-show="showNav || fixedNav">单元测试</el-text>
           </el-menu-item>
-          <el-menu-item index="3" @click="updateSidebarSelection('系统测试')">
+          <el-menu-item index="4" @click="updateSidebarSelection('系统测试')">
             <el-icon class="nav-icon"><Platform /></el-icon>
             <el-text v-show="showNav || fixedNav">系统测试</el-text>
           </el-menu-item>
-          <el-menu-item index="4" @click="updateSidebarSelection('性能测试')">
+          <el-menu-item index="5" @click="updateSidebarSelection('性能测试')">
             <el-icon class="nav-icon"><TrendCharts /></el-icon>
             <el-text v-show="showNav || fixedNav">性能测试</el-text>
           </el-menu-item>
@@ -42,6 +46,7 @@ import { useStore } from "vuex";
 import {
   Menu,
   Guide,
+  Document,
   Aim,
   Platform,
   TrendCharts,

@@ -2,7 +2,13 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    projectName: '三角形？', // project name
+    project: {
+      name: '未设置项目',
+      description: '',
+      date: '',
+      manager: '',
+      resource: ''
+    }, // 默认项目为空
     sidebarSelection: '项目设置', // 侧边栏选择
   },
   getters: {
@@ -10,7 +16,10 @@ export default createStore({
   mutations: {
     updateSidebarSelection(state, selection) { // 侧边栏选择更新
       state.sidebarSelection = selection;
-    }
+    },
+    setProject(state, project) {
+      state.project = project;
+    },    
   },
   actions: {
   },
