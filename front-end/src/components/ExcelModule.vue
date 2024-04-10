@@ -1,48 +1,88 @@
 <template>
   <div>
-    <!-- Excel编辑/显示/下载/上传功能模块 -->
     <el-card>
       <template #header>
-        <h3>Excel模块</h3>
+        <h3>Junit模块</h3>
       </template>
-
-      <!-- 上传Excel文件 -->
-      <el-upload
-        class="upload-excel"
-        action="/upload-excel"
-        :show-file-list="false"
-        :on-success="handleUploadSuccess"
-      >
-        <el-button type="primary">上传Excel文件</el-button>
-      </el-upload>
-
-      <!-- 显示Excel内容 -->
-      <el-table v-if="excelData" :data="excelData">
-        <el-table-column v-for="column in excelColumns" :label="column.label" :prop="column.prop" :key="column.prop"></el-table-column>
-      </el-table>
-
-      <!-- 下载Excel文件 -->
-      <el-button v-if="excelData" type="success" @click="downloadExcel">下载Excel文件</el-button>
+      <div class="sheet-container">
+        <div id="sheet-online-container" class="my-excel"></div>
+      </div>
     </el-card>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { ElUpload, ElButton, ElTable, ElTableColumn, ElCard } from 'element-plus';
+<script>
+import Spreadsheet from "x-data-spreadsheet";
+import zhCN from "x-data-spreadsheet/src/locale/zh-cn";
 
-// Excel编辑/显示/下载/上传功能模块相关数据
-const excelData = ref(null);
-const excelColumns = ref([]);
+export default {
+  name: "ExcelOnline",
+  data() {
+    return {
+      sheet: null,
+      options: {
+        mode: "edit",
+        showToolbar: true,
+        showGrid: true,
+        showContextmenu: true,
+        view: {
+          height: () =>
+            document.getElementById("sheet-online-container").clientHeight,
+          width: () =>
+            document.getElementById("sheet-online-container").clientWidth,
+        },
+        row: {
+          len: 100,
+          height: 25,
+        },
+        col: {
+          len: 26,
+          width: 100,
+          indexWidth: 60,
+          minWidth: 60,
+        },
+        style: {
+          bgcolor: "#ffffff",
+          align: "left",
+          valign: "middle",
+          textwrap: false,
+          strike: false,
+          underline: false,
+          color: "#0a0a0a",
+          font: {
+            name: "Helvetica",
+            size: 10,
+            bold: false,
+            italic: false,
+          },
+        },
+      },
+    };
+  },
+  methods: {
+    InitSheet() {
+      const sheetContainer = document.getElementById("sheet-online-container");
+      if (!sheetContainer) {
+        console.error("Element with id 'sheet-online-container' not found");
+        return;
+      }
 
-// 处理上传Excel文件成功事件
-// const handleUploadSuccess = (response, file, fileList) => {
-//   // 解析上传的Excel文件并保存到excelData中
-// };
-
-// 下载Excel文件
-const downloadExcel = () => {
-  // 实现下载Excel文件的逻辑
+      Spreadsheet.locale("zh-cn", zhCN);
+      this.sheet = new Spreadsheet(sheetContainer, this.options);
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // 初始化表格
+      this.InitSheet();
+    });
+  },
 };
-
 </script>
+
+<style scoped>
+.my-excel {
+  width: 100vh;
+  height: 70vh;
+}
+</style>

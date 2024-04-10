@@ -5,6 +5,7 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import '@/styles/global.css'
+import 'sass-loader'
 
 const app = createApp(App)
 app.use(ElementPlus)

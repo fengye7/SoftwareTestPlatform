@@ -8,10 +8,22 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.2",
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.8",
+    "@codemirror/lang-java": "^6.0.1",
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/lang-python": "^6.1.5",
+    "@codemirror/lang-sql": "^6.6.3",
+    "@codemirror/state": "6.x",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "@element-plus/icons-vue": "^2.3.1",
+    "codemirror": "^6.0.1",
+    "codemirror-editor-vue3": "^2.5.8",
     "core-js": "^3.8.3",
     "element-plus": "^2.6.3",
     "vue": "^3.2.13",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0",
     "x-data-spreadsheet": "^1.1.9"
@@ -19,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@types/codemirror": "^5.60.15",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -26,7 +39,11 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "less-loader": "^12.2.0"
+    "less-loader": "^12.2.0",
+    "path-browserify": "^1.0.1",
+    "sass": "^1.74.1",
+    "sass-loader": "^14.1.1",
+    "url": "^0.11.3"
   },
   "eslintConfig": {
     "root": true,
