@@ -10,10 +10,7 @@
     </div>
     <div class="right-panel">
       <!-- 在线Junit代码编辑器或直接上传源文件的入口 -->
-      <j-unit-module
-        v-model:junitCode="junitCode"
-        @uploadJunitFile="uploadJunitFile"
-      ></j-unit-module>
+      <JUnitModule/>
     </div>
   </div>
 </template>

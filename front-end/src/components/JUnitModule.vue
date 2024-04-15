@@ -1,109 +1,70 @@
 <template>
   <div>
-    <button @click="changeTheme($event)">黑夜</button>
-    <button @click="changeMode($event)">C++</button>
-    <hr/><br/>
-    <div style="height: 400px">
-    <codemirror
-      class="my-codemirror"
-      v-model="code"
-      placeholder="Code goes here..."
-      :mode="mode"
-      :spellcheck="spellcheck"
-      :autofocus="autofocus"
-      :indent-with-tab="indentWithTab"
-      :tabSize="tabSize"
-      :extensions="extensions"
-      @ready="log('ready', $event)"
-      @change="log('change', $event)"
-      @focus="log('focus', $event)"
-      @blur="useEditedCode"
-      style="height: 400px"
-    ></codemirror>
-    </div>
+    <h3>在线编辑器</h3>
+    <select v-model="selectValue">
+      <option value="cpp">C++</option>
+      <option value="python">Python</option>
+      <option value="java">Java</option>
+    </select>
+    <hr />
+    <br />
+    <div class="my-codemirror" ref="editor"></div>
   </div>
 </template>
 
-<script>
-import { Codemirror } from "vue-codemirror";
-import { python } from "@codemirror/lang-python";
-import { cpp } from "@codemirror/lang-cpp";
+<script setup>
+// import { python } from "@codemirror/lang-python";
+// import { cpp } from "@codemirror/lang-cpp";
+// import { java } from "@codemirror/lang-java";
 
-import { oneDark } from "@codemirror/theme-one-dark";
+import { ref, onMounted } from "vue";
 
-import { reactive, ref, toRefs } from "vue";
+import { EditorState } from "@codemirror/state";
+import { EditorView, lineNumbers } from "@codemirror/view";
+import { history } from "@codemirror/commands";
+import { autocompletion, closeBrackets } from "@codemirror/autocomplete";
+import { bracketMatching, syntaxHighlighting } from "@codemirror/language";
+import { oneDarkHighlightStyle, oneDark } from "@codemirror/theme-one-dark";
 
-export default {
-  components: {
-    Codemirror,
-  },
-  setup() {
-    // 数据
-    const code = ref(``);
-    let selectValue = "cpp";
-    let dateTime = "黑夜";
-    const options = reactive({
-      mode: "text/x-c++src",
-      spellcheck: true,
-      autofocus: true,
-      indentWithTab: true,
-      tabSize: 2,
-      extensions: [cpp(), oneDark], //传递给CodeMirror EditorState。创建({扩展})
-    });
+import { graphql } from "cm6-graphql";
+import query from "./js/sample-query";
+import { TestSchema } from "./js/testSchema";
 
-    // 方法
-    // 失去焦点时,使用已编辑的代码
-    function useEditedCode() {
-      console.log("@@@blur@@@code:", code.value);
-      console.log("@@@blur@@@cpp:", cpp);
-    }
+const selectValue = ref("java");
 
-    // 改变主题
-    function changeTheme(e) {
-      console.log("options.extensions:", options.extensions);
-      if (e.target.innerHTML === "黑夜") {
-        options.extensions = [];
-        dateTime = e.target.innerHTML = "白天";
-      } else {
-        options.extensions = [oneDark];
-        dateTime = e.target.innerHTML = "黑夜";
-      }
-    }
-    // 改变模式
-    function changeMode(e) {
-      console.log("selectValue:", selectValue);
-      if (selectValue === "cpp") {
-        if (dateTime === "黑夜") options.extensions = [python(), oneDark];
-        else options.extensions = [python()];
-        selectValue = "python";
-        e.target.innerHTML = "python";
-        options.mode = "text/x-python";
-      } else {
-        if (dateTime === "黑夜") options.extensions = [cpp(), oneDark];
-        else options.extensions = [cpp()];
-        selectValue = "cpp";
-        e.target.innerHTML = "C++";
-        options.mode = "text/x-c++src";
-      }
-    }
-    // 返回
-    return {
-      code,
-      selectValue,
-      dateTime,
-      ...toRefs(options),
-      log: console.log,
-      useEditedCode,
-      changeTheme,
-      changeMode,
-    };
-  },
-};
+const state = EditorState.create({
+  doc: query,
+  extensions: [
+    bracketMatching(),
+    closeBrackets(),
+    history(),
+    autocompletion(),
+    lineNumbers(),
+    oneDark,
+    syntaxHighlighting(oneDarkHighlightStyle),
+    graphql(TestSchema, {
+      onShowInDocs(field, type, parentType) {
+        alert(
+          `Showing in docs.: Field: ${field}, Type: ${type}, ParentType: ${parentType}`
+        );
+      },
+      onFillAllFields(view, schema, _query, cursor, token) {
+        alert(`Filling all fields. Token: ${token}`);
+      },
+    }),
+  ],
+});
+onMounted(() => {
+  const editor = document.getElementById("editor");
+  editor.appendChild(new EditorView({
+    state,
+  }));
+});
 </script>
 
 <style scoped>
 .my-codemirror {
-  width: 100%;
-  height: 100%;
+  width: 80vh;
+  max-height: 80vh;
 }
 </style>
