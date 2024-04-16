@@ -18,11 +18,13 @@ vue3 + spring boot
 - 左边是一个可隐的导航栏组件，内容包含（项目设置，单元测试，集成测试，系统测试，性能测试）
 - 右上角是登录的一个组件栏
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/69a3d9a3-7c88-4c38-a82f-4358f433ab8a/08521ecb-99e4-4abc-8c20-0307d3001292/Untitled.png)
+<img width="480" alt="image" src="https://github.com/fengye7/SoftwareTestPlatform/assets/117179005/ef5f6e1d-659d-401c-a492-7190f3f3c043">
+
 
 ### 项目设置界面
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/69a3d9a3-7c88-4c38-a82f-4358f433ab8a/09b267a6-4a52-4d43-8b65-1ecb24c0007b/Untitled.png)
+![image](https://github.com/fengye7/SoftwareTestPlatform/assets/117179005/6221ac75-9820-45c2-a81e-6a6a99c61edb)
+
 
 ### 接口测试
 
