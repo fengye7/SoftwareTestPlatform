@@ -21,10 +21,12 @@ export default {
   height: 95vh;
   background-color: #f5f5f5;
   background-image: url('@/assets/imgs/404-not-found.png');
-  background-size: cover;
-  background-position: center;
+  background-size: contain; /* 自动缩放并完整展示原图像 */
+  background-repeat: no-repeat; /* 防止背景图重复 */
+  background-position: center; /* 背景图居中 */
   text-align: center;
 }
+
 
 .not-found-content {
   background-color: rgba(255, 255, 255, 0.8);

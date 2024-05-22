@@ -19,12 +19,14 @@ const project = computed(() => store.state.project);
 
 // 动态导航函数
 const navigateTo = (type, selection) => {
-  console.log(type + " " + selection);
   if (type === "练习") {
     if (selection === "项目设置") {
       router.push("/project-set");
     } else if (selection === "测试") {
       router.push(project.value.name !== "未设置项目" ? `/${project.value.name}/ordinary-test` : "/ordinary-test");
+    }
+    else{
+      router.push({name:"NotFound"});
     }
   } else if (type === "项目") {
     switch (selection) {

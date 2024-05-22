@@ -45,6 +45,11 @@ const routes = [
     name: "PropertyTest",
     component: () => import("../views/PropertyTestView.vue"), // 性能测试页面路由
   },
+  {
+    path: "/about",
+    name: "About",
+    component: () => import("../views/AboutThisWebView.vue"), // 关于本网站页面路由
+  },
   // 通配符路由，匹配所有未知路径，指向 404 页面
   {
     path: "/:catchAll(.*)",
