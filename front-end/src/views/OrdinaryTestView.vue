@@ -1,23 +1,11 @@
 <template>
   <div class="container">
-    <div class="left-panel">
-      <!-- Excel编辑/显示/下载/上传功能模块 -->
-      <excel-module
-        v-model:excelData="excelData"
-        @downloadExcel="downloadExcel"
-        @uploadExcel="uploadExcel"
-      ></excel-module>
-    </div>
-    <div class="right-panel">
-      <!-- 在线Junit代码编辑器或直接上传源文件的入口 -->
-      <JUnitModule/>
-    </div>
+    <h1>Hello 练习 Testing</h1>
   </div>
 </template>
 
 <script setup>
-import ExcelModule from '@/components/ExcelModule.vue';
-import JUnitModule from '@/components/JUnitModule.vue';
+
 </script>
 
 <style scoped>

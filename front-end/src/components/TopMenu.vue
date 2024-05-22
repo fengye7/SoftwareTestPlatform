@@ -1,7 +1,7 @@
 <template>
   <el-menu
     :default-active="activeIndex"
-    class="el-menu-demo"
+    class="el-menu-demo nav-bar"
     mode="horizontal"
     background-color="#545c64"
     text-color="#fff"
@@ -72,6 +72,13 @@ watch(sidebarSelection, (newVal) => {
 
 // 初始化菜单项
 switch (sidebarSelection.value) {
+  case "练习":
+    menuItems.value = [
+      { index: "1", label: "项目信息" },
+      { index: "2", label: "工作台" },
+      { index: "3", label: "项目进度" },
+    ];
+    break;
   case "项目设置":
     menuItems.value = [
       { index: "1", label: "项目信息" },
@@ -93,5 +100,7 @@ switch (sidebarSelection.value) {
 </script>
 
 <style scoped>
-/* 样式 */
+.nav-bar {
+  height: 5vh;
+}
 </style>

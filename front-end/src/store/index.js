@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 
 export default createStore({
   state: {
@@ -9,20 +9,19 @@ export default createStore({
       manager: '',
       resource: ''
     }, // 默认项目为空
-    sidebarSelection: '项目设置', // 侧边栏选择
+    sidebarType: '', // 属于练习还是项目
+    sidebarSelection: '', // 侧边栏选择
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
-    updateSidebarSelection(state, selection) { // 侧边栏选择更新
-      state.sidebarSelection = selection;
+    updateSidebarSelection(state, payload) { // 侧边栏选择更新
+      state.sidebarType = payload.type;
+      state.sidebarSelection = payload.selection;
     },
     setProject(state, project) {
       state.project = project;
     },    
   },
-  actions: {
-  },
-  modules: {
-  },
-})
+  actions: {},
+  modules: {},
+});

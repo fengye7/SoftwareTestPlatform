@@ -5,32 +5,55 @@
     @mouseleave="showNav = false"
   >
     <el-container style="height: 100%;">
-      <el-header>
+      <el-header @click="navigateTo('Home')">
         <el-icon class="nav-icon"><Menu /></el-icon>
         <el-text v-show="showNav || fixedNav">TestPlatform</el-text>
       </el-header>
       <el-container style="height: 100%;">
-        <el-menu default-active="1" class="el-menu-vertical-demo">
-          <el-menu-item index="1" @click="updateSidebarSelection('项目设置')">
-            <el-icon class="nav-icon"><Guide /></el-icon>
-            <el-text v-show="showNav || fixedNav">项目设置</el-text>
-          </el-menu-item>
-          <el-menu-item index="2" @click="updateSidebarSelection('一般测试')">
-            <el-icon class="nav-icon"><Document /></el-icon>
-            <el-text v-show="showNav || fixedNav">一般测试</el-text>
-          </el-menu-item>
-          <el-menu-item index="3" @click="updateSidebarSelection('单元测试')">
-            <el-icon class="nav-icon"><Aim /></el-icon>
-            <el-text v-show="showNav || fixedNav">单元测试</el-text>
-          </el-menu-item>
-          <el-menu-item index="4" @click="updateSidebarSelection('系统测试')">
-            <el-icon class="nav-icon"><Platform /></el-icon>
-            <el-text v-show="showNav || fixedNav">系统测试</el-text>
-          </el-menu-item>
-          <el-menu-item index="5" @click="updateSidebarSelection('性能测试')">
-            <el-icon class="nav-icon"><TrendCharts /></el-icon>
-            <el-text v-show="showNav || fixedNav">性能测试</el-text>
-          </el-menu-item>
+        <el-menu
+          default-active="1-1"
+          class="el-menu-vertical-demo"
+        >
+          <el-sub-menu index="1">
+            <template #title>
+              <el-icon class="nav-icon"><Document /></el-icon>
+              <el-text v-show="showNav || fixedNav">练习</el-text>
+            </template>
+            <el-menu-item index="1-1" @click="updateSidebarSelection('练习','项目设置')">
+              <el-icon class="nav-icon"><Guide /></el-icon>
+              <el-text v-show="showNav || fixedNav">项目设置</el-text>
+            </el-menu-item>
+            <el-menu-item index="1-2" @click="updateSidebarSelection('练习','测试')">
+              <el-icon class="nav-icon"><Operation /></el-icon>
+              <el-text v-show="showNav || fixedNav">测试</el-text>
+            </el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="2">
+            <template #title>
+              <el-icon class="nav-icon"><Platform /></el-icon>
+              <el-text v-show="showNav || fixedNav">项目测试</el-text>
+            </template>
+            <el-menu-item index="2-1" @click="updateSidebarSelection('项目','项目介绍')">
+              <el-icon class="nav-icon"><FullScreen /></el-icon>
+              <el-text v-show="showNav || fixedNav">项目介绍</el-text>
+            </el-menu-item>
+            <el-menu-item index="2-2" @click="updateSidebarSelection('项目','单元测试')">
+              <el-icon class="nav-icon"><Aim /></el-icon>
+              <el-text v-show="showNav || fixedNav">单元测试</el-text>
+            </el-menu-item>
+            <el-menu-item index="2-3" @click="updateSidebarSelection('项目','集成测试')">
+              <el-icon class="nav-icon"><Connection /></el-icon>
+              <el-text v-show="showNav || fixedNav">集成测试</el-text>
+            </el-menu-item>
+            <el-menu-item index="2-4" @click="updateSidebarSelection('项目','系统测试')">
+              <el-icon class="nav-icon"><Refresh /></el-icon>
+              <el-text v-show="showNav || fixedNav">系统测试</el-text>
+            </el-menu-item>
+            <el-menu-item index="2-5" @click="updateSidebarSelection('项目','性能测试')">
+              <el-icon class="nav-icon"><TrendCharts /></el-icon>
+              <el-text v-show="showNav || fixedNav">性能测试</el-text>
+            </el-menu-item>
+          </el-sub-menu>
         </el-menu>
       </el-container>
       <el-footer v-show="showNav" style="text-align: right;">
@@ -43,9 +66,14 @@
 <script setup>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import {useRouter} from "vue-router"
 import {
   Menu,
   Guide,
+  FullScreen,
+  Connection,
+  Refresh,
+  Operation,
   Document,
   Aim,
   Platform,
@@ -58,9 +86,15 @@ const fixedNav = ref(false);
 const store = useStore(); // 使用 Vuex 的 store
 
 // 更新侧边栏选择的方法
-const updateSidebarSelection = (selection) => {
-  store.commit('updateSidebarSelection', selection);
+const updateSidebarSelection = (type,selection) => {
+  store.commit('updateSidebarSelection',{ type, selection});
 }
+
+const router = useRouter(); // 使用 Vue Router
+
+const navigateTo = (routeName) => {
+  router.push({ name: routeName });
+};
 </script>
 
 <style scoped>
@@ -86,12 +120,13 @@ const updateSidebarSelection = (selection) => {
 }
 
 .el-menu-item {
+  background-color: #043d72;
   display: flex;
   align-items: center;
 }
 
-.el-menu-item el-icon,
-.el-menu-item el-text {
+.el-sub-menu .el-text {
   margin-right: 10px;
+  color: rgba(238, 255, 7, 0.5);
 }
 </style>
