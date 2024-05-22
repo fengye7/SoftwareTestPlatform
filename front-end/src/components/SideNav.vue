@@ -93,6 +93,7 @@ const updateSidebarSelection = (type,selection) => {
 const router = useRouter(); // 使用 Vue Router
 
 const navigateTo = (routeName) => {
+  store.commit('updateSidebarSelection',{});
   router.push({ name: routeName });
 };
 </script>

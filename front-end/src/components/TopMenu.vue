@@ -7,12 +7,17 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <el-sub-menu index="1">
-      <template #title>项目：{{ projectName }}</template>
-      <el-menu-item index="1-1">重置项目设置</el-menu-item>
-    </el-sub-menu>
+    <el-menu-item v-if="sidebarType == '练习'">
+      <template #title><strong>练习：{{ projectName }}</strong></template>
+    </el-menu-item>
+    <el-menu-item v-else-if="sidebarType == '项目'">
+      <template #title><strong>项目：{{ sidebarSelection }}</strong></template>
+    </el-menu-item>
+    <el-menu-item v-else>
+      <template #title><strong>欢迎使用SoftwareTestPlatform</strong></template>
+    </el-menu-item>
     <!-- 循环渲染菜单项 -->
-    <el-menu-item
+    <el-menu-item v-show="sidebarType == '练习'"
       v-for="menuItem in menuItems"
       :key="menuItem.index"
       :index="menuItem.index"
@@ -23,9 +28,7 @@
       <template #title>
         <el-icon><QuestionFilled /></el-icon>
       </template>
-      <el-menu-item>新手教程</el-menu-item>
-      <el-menu-item>关于本站</el-menu-item>
-      <el-menu-item>关于我们</el-menu-item>
+      <el-menu-item @click="navigateTo('About')">关于本站</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
@@ -34,9 +37,12 @@
 import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 import { QuestionFilled } from "@element-plus/icons-vue";
-
+import { useRouter } from "vue-router";
+ 
 const store = useStore(); // 使用 Vuex 的 store
 
+// 获取侧边栏选择的类型
+const sidebarType = computed(() => store.state.sidebarType);
 // 获取侧边栏选择
 const sidebarSelection = computed(() => store.state.sidebarSelection);
 // 获取项目名称
@@ -46,6 +52,13 @@ const activeIndex = ref("1");
 
 // 导航栏菜单项数组
 const menuItems = ref([]);
+
+const router = useRouter(); // 使用 Vue Router
+
+const navigateTo = (routeName) => {
+  store.commit('updateSidebarSelection',{});
+  router.push({ name: routeName });
+};
 
 // 监视侧边栏选择的变化
 watch(sidebarSelection, (newVal) => {
@@ -57,12 +70,11 @@ watch(sidebarSelection, (newVal) => {
         { index: "3", label: "项目进度" },
       ];
       break;
-    case "单元测试":
+    case "测试":
       menuItems.value = [
-        { index: "1", label: "接口文档" },
-        { index: "2", label: "接口测试" },
-        { index: "3", label: "加载测试" },
-        { index: "4", label: "安全测试" },
+        { index: "1", label: "问题描述" },
+        { index: "2", label: "结果查询" },
+        { index: "3", label: "可视化分析" },
       ];
       break;
     default:

@@ -7,5 +7,8 @@ module.exports = defineConfig({
         "path": require.resolve("path-browserify")
       }
     }
+  },
+  devServer: {
+    port: 8888,
   }
 })
