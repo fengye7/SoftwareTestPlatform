@@ -7,7 +7,7 @@
     <el-container style="height: 100%;">
       <el-header @click="navigateTo('Home')">
         <el-icon class="nav-icon"><Menu /></el-icon>
-        <el-text v-show="showNav || fixedNav">TestPlatform</el-text>
+        <el-text v-show="showNav || fixedNav"><strong>TestPlatform</strong></el-text>
       </el-header>
       <el-container style="height: 100%;">
         <el-menu
@@ -112,7 +112,7 @@ const navigateTo = (routeName) => {
   height: 50px;
   width: auto;
   line-height: 50px;
-  color: #e8f5ab;
+  color: #edff9c;
 }
 
 .el-menu-vertical-demo {
@@ -128,6 +128,6 @@ const navigateTo = (routeName) => {
 
 .el-sub-menu .el-text {
   margin-right: 10px;
-  color: rgba(238, 255, 7, 0.5);
+  color: rgba(255, 102, 7, 0.5);
 }
 </style>
