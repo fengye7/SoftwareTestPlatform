@@ -38,10 +38,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
 
-const requireScripts = require.context('../assets/files/scripts/triangleJudge', false, /\.js$/);
-const requireTestSets = require.context('../assets/files/tests/triangleJudge', false, /\.csv$/);
+// 访问store
+const store = useStore();
+const projectName = computed(() => store.state.project.name);
 
 const selectedCodeVersion = ref('');
 const selectedTestSet = ref('');
@@ -50,8 +52,34 @@ const codeVersions = ref([]);
 const testSets = ref([]);
 
 const loadFiles = () => {
-  codeVersions.value = requireScripts.keys().map(fileName => fileName.replace('./', '').replace('.js', ''));
-  testSets.value = requireTestSets.keys().map(fileName => fileName.replace('./', '').replace('.csv', ''));
+  let requireScripts;
+  let requireTestSets;
+  
+  switch(projectName.value) {
+    case '判断三角形':
+      requireScripts = require.context('../assets/files/scripts/triangleJudge', false, /\.js$/);
+      requireTestSets = require.context('../assets/files/tests/triangleJudge', false, /\.csv$/);
+      break;
+    case '万年历':
+      requireScripts = require.context('../assets/files/scripts/calendarProblem', false, /\.js$/);
+      requireTestSets = require.context('../assets/files/tests/calendarProblem', false, /\.csv$/);
+      break;
+    case '电脑销售':
+      requireScripts = require.context('../assets/files/scripts/computerSelling', false, /\.js$/);
+      requireTestSets = require.context('../assets/files/tests/computerSelling', false, /\.csv$/);
+      break;
+    case '电信系统':
+      requireScripts = require.context('../assets/files/scripts/telecomSystem', false, /\.js$/);
+      requireTestSets = require.context('../assets/files/tests/telecomSystem', false, /\.csv$/);
+      break;
+    default:
+      break;
+  }
+
+  if (requireScripts && requireTestSets) {
+    codeVersions.value = requireScripts.keys().map(fileName => fileName.replace('./', '').replace('.js', ''));
+    testSets.value = requireTestSets.keys().map(fileName => fileName.replace('./', '').replace('.csv', ''));
+  }
 };
 
 onMounted(() => {

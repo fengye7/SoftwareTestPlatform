@@ -123,9 +123,16 @@ const projects = ref([
     resource: "",
   },
   {
-    name: "测试工具平台",
+    name: "电信系统",
     description: "测试平台的各种功能：单元测试，系统测试，集成测试……",
     date: "2024-04-05",
+    manager: "fengye7",
+    resource: "#############",
+  },
+  {
+    name: "电脑销售",
+    description: "测试平台的各种功能：单元测试，系统测试，集成测试……",
+    date: "2024-05-23",
     manager: "fengye7",
     resource: "#############",
   },
