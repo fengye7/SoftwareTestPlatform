@@ -38,18 +38,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+
+const requireScripts = require.context('../assets/files/scripts/triangleJudge', false, /\.js$/);
+const requireTestSets = require.context('../assets/files/tests/triangleJudge', false, /\.csv$/);
 
 const selectedCodeVersion = ref('');
 const selectedTestSet = ref('');
 
-const codeVersions = ref(['v1.0', 'v1.1', 'v2.0']); // Example versions
-const testSets = ref(['Test Set 1', 'Test Set 2', 'Test Set 3']); // Example test sets
+const codeVersions = ref([]);
+const testSets = ref([]);
+
+const loadFiles = () => {
+  codeVersions.value = requireScripts.keys().map(fileName => fileName.replace('./', '').replace('.js', ''));
+  testSets.value = requireTestSets.keys().map(fileName => fileName.replace('./', '').replace('.csv', ''));
+};
+
+onMounted(() => {
+  loadFiles();
+});
 
 const uploadNewCode = (event) => {
   const file = event.target.files[0];
   if (file) {
-    // Handle file upload logic here
     console.log('New code file uploaded:', file.name);
   }
 };
@@ -57,17 +68,20 @@ const uploadNewCode = (event) => {
 const uploadNewTestSet = (event) => {
   const file = event.target.files[0];
   if (file) {
-    // Handle file upload logic here
     console.log('New test set file uploaded:', file.name);
   }
 };
 
 const startTesting = () => {
-  // Start testing logic here
+  if (!selectedCodeVersion.value || !selectedTestSet.value) {
+    alert('请先选择测试脚本和测试集');
+    return;
+  }
   console.log('Testing started with:', {
     selectedCodeVersion: selectedCodeVersion.value,
     selectedTestSet: selectedTestSet.value
   });
+  alert(`开始测试：\n脚本版本：${selectedCodeVersion.value}\n测试集：${selectedTestSet.value}`);
 };
 </script>
 
@@ -76,11 +90,13 @@ const startTesting = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #f9f9f9;
+  background-color: #f9fcef;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 100%;
+  border-radius: 15px;
+  box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.1);
+  height: 85%;
+  width: 85%;
+  margin: auto;
 }
 
 .form-group {
@@ -90,6 +106,7 @@ const startTesting = () => {
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .form-group select,

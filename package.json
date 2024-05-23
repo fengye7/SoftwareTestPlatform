@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "monaco-editor": "^0.48.0"
+  },
+  "devDependencies": {
+    "csv-loader": "^3.0.5",
+    "file-loader": "^6.2.0"
   }
 }

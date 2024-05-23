@@ -6,6 +6,23 @@ module.exports = defineConfig({
       fallback: {
         "path": require.resolve("path-browserify")
       }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.csv$/,
+          use: [
+            {
+              loader: 'csv-loader',
+              options: {
+                dynamicTyping: true,
+                header: true,
+                skipEmptyLines: true
+              }
+            }
+          ]
+        }
+      ]
     }
   },
   devServer: {
