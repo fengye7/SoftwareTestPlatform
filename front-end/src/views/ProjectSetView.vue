@@ -11,6 +11,7 @@
         <p v-show="selectedProject.resource !== ''">
           项目源地址：{{ selectedProject.resource }}
         </p>
+        <el-button type="primary" @click="generateTestResults">测试</el-button>
       </div>
       <div v-else>
         <p>暂未选择项目</p>
@@ -87,6 +88,20 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+     <!-- 测试结果对话框 -->
+    <el-dialog v-model="showTestResults" title="测试结果" width="70%">
+      <el-table :data="testResults" style="width: 100%">
+        <el-table-column prop="TestCaseID" label="TestCaseID" width="100" />
+        <el-table-column prop="Input" label="Input" />
+        <el-table-column prop="ExpectedOutput" label="ExpectedOutput" />
+        <el-table-column prop="ActualOutput" label="ActualOutput" />
+        <el-table-column prop="Correctness" label="Correctness" />
+        <el-table-column prop="Time" label="Time" />
+      </el-table>
+        <template v-slot:footer>
+        <el-button @click="showTestResults = false">关闭</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -122,6 +137,20 @@ const projects = ref([
     manager: "fengye7",
     resource: "",
   },
+   {
+    name: "电脑销售系统",
+    description: "输入主机、显示器、外设数量（范围分别为0~70、0~80、0~90）,计算销售员应得的佣金",
+    date: "2024-05-25",
+    manager: "zyy",
+    resource: "",
+  },
+   {
+    name: "电信收费系统",
+    description: "输入用户未按时缴费次数（0~11）和通话时长（0~单月最大分钟数）,计算本月最终通话费用",
+    date: "2024-05-25",
+    manager: "zyy",
+    resource: "",
+  },
   {
     name: "测试工具平台",
     description: "测试平台的各种功能：单元测试，系统测试，集成测试……",
@@ -150,6 +179,45 @@ const selectProject = (project) => {
   console.log("选中的项目：", project);
   store.commit("setProject", project);
 };
+const showTestResults = ref(false); // 控制测试结果显示与隐藏
+const testResults = ref([]); // 存储测试结果
+
+const generateTestResults = () => {
+  // 获取当前时间并格式化
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
+  // 模拟生成测试结果
+  testResults.value = [
+    {
+      TestCaseID: 1,
+      Input: "1, 1, 1",
+      ExpectedOutput: "等边三角形",
+      ActualOutput: "等边三角形",
+      Correctness: "正确",
+      Time: getCurrentDateTime(),
+    },
+    {
+      TestCaseID: 2,
+      Input: "2, 2, 3",
+      ExpectedOutput: "等腰三角形",
+      ActualOutput: "等腰三角形",
+      Correctness: "正确",
+      Time: getCurrentDateTime(),
+    },
+    // 添加更多测试结果
+  ];
+  showTestResults.value = true;
+};
+
 </script>
 
 <style scoped>
