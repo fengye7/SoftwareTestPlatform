@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     project: {
-      name: '未设置项目',
+      name: '',
       description: '',
       date: '',
       manager: '',

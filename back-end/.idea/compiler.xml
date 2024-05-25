@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="database-server" />
         <module name="file-server" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="back-end" options="" />
+      <module name="database-server" options="-parameters" />
       <module name="file-server" options="-parameters" />
       <module name="page-server" options="-parameters" />
       <module name="product" options="-parameters" />

@@ -16,15 +16,3 @@ function triangleJudge(a, b, c) {
     }
 }
 
-// 根据.csv文件的表头字段提取对应的参数，返回参数数组
-function getArgs(row) {
-    let args = [
-        Number.parseInt(row.Edge1, 10),
-        Number.parseInt(row.Edge2, 10),
-        Number.parseInt(row.Edge3, 10)
-    ];
-    return args;
-}
-
-// 添加别名，进行导出
-export { triangleJudge as useSingleTest, getArgs as useGetArgs };

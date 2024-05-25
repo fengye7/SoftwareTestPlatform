@@ -66,8 +66,6 @@ watch(sidebarSelection, (newVal) => {
     case "项目设置":
       menuItems.value = [
         { index: "1", label: "项目信息" },
-        { index: "2", label: "工作台" },
-        { index: "3", label: "项目进度" },
       ];
       break;
     case "测试":
