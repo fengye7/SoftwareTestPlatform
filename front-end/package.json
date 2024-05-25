@@ -14,6 +14,7 @@
     "@codemirror/text": "^0.19.6",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.2",
     "cm6-graphql": "^0.0.14",
     "codemirror": "^6.0.1",
     "core-js": "^3.8.3",
