@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: file-server
+
+dubbo:
+  application:
+    name: file-server
+  registry:
+    address: N/A
+  protocol:
+    name: dubbo
+    port: -1
