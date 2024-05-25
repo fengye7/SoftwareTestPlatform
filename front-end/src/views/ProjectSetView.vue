@@ -3,7 +3,7 @@
     <!-- 左边的卡片 -->
     <el-card class="left-card">
       <h2>当前选择的项目信息</h2>
-      <div v-if="selectedProject.name != '未设置项目'">
+      <div v-if="selectedProject.name != ''">
         <p>项目名称：{{ selectedProject.name }}</p>
         <p>项目管理者：{{ selectedProject.manager }}</p>
         <p>项目描述：{{ selectedProject.description }}</p>
@@ -82,7 +82,7 @@
           <el-input v-model="projectInfo.description" type="textarea" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">Create</el-button>
+          <el-button type="primary" @click="createProject">Create</el-button>
           <el-button @click="dialogVisible = false">Cancel</el-button>
         </el-form-item>
       </el-form>
@@ -94,6 +94,7 @@
 import { ref, reactive, computed } from "vue";
 import { useStore } from "vuex";
 import { ElCard, ElDivider, ElButton, ElDialog } from "element-plus";
+import axios from "axios";
 
 const store = useStore();
 const selectedProject = computed(() => store.state.project);
@@ -106,37 +107,7 @@ const projectInfo = reactive({
   manager: "",
   resource: "", // 项目若开源，可选url
 });
-const projects = ref([
-  {
-    name: "判断三角形",
-    description:
-      "输入三角形三边（0~800），程序返回三角形类别，输出有：等边三角形、等腰三角形、 普通三角形、不能构成三角形",
-    date: "2024-04-05",
-    manager: "fengye7",
-    resource: "#############",
-  },
-  {
-    name: "万年历",
-    description: "输入日期（year:1800~2100）,判断日期是否合法",
-    date: "2024-04-05",
-    manager: "fengye7",
-    resource: "",
-  },
-  {
-    name: "电信系统",
-    description: "测试平台的各种功能：单元测试，系统测试，集成测试……",
-    date: "2024-04-05",
-    manager: "fengye7",
-    resource: "#############",
-  },
-  {
-    name: "电脑销售",
-    description: "测试平台的各种功能：单元测试，系统测试，集成测试……",
-    date: "2024-05-23",
-    manager: "fengye7",
-    resource: "#############",
-  },
-]);
+const projects = ref([]);
 /**项目列表控制 **/
 const currentPage = ref(1);
 const pageSize = 10;
@@ -157,7 +128,57 @@ const selectProject = (project) => {
   console.log("选中的项目：", project);
   store.commit("setProject", project);
 };
+
+// 获取项目列表
+const getProjects = async () => {
+  try {
+    const response = await axios.get("http://localhost:8082/projects"); // 根据实际的后端API路径进行调整
+    projects.value = response.data; // 将获取的项目数据赋值给 projects 数组
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
+  }
+};
+
+// 在组件创建时调用获取项目列表的函数
+import { onMounted } from 'vue';
+onMounted(() => {
+  getProjects();
+});
+
+// 创建项目
+const createProject = async () => {
+  try {
+    // 检查除 resource 外的所有属性是否为空
+    const { name, description, date, manager, resource } = projectInfo;
+    if (!name || !description || !date || !manager) {
+      alert("请完整填写项目信息");
+      return; // 如果有任何一个属性为空，则提醒用户并返回，不发送请求
+    }
+
+    // 格式化日期为 ISO 8601 格式
+    const isoDate = new Date(date).toISOString().split('T')[0];
+
+    const params = new URLSearchParams();
+    params.append("name", name);
+    params.append("description", description);
+    params.append("date", isoDate);
+    params.append("manager", manager);
+    params.append("resource", resource);
+
+    const response = await axios.post("http://localhost:8082/projects", params); // 使用 axios.post 发送 POST 请求，将 projectInfo 数据发送到后端API
+    console.log("Project created successfully:", response.data);
+    // 创建项目成功后，您可能需要刷新项目列表以显示新项目
+    getProjects(); // 重新获取项目列表
+    dialogVisible.value = false; // 关闭创建项目对话框
+  } catch (error) {
+    console.error("Failed to create project:", error);
+    alert("创建项目失败，API请求失败!!!");
+  }
+};
+
+
 </script>
+
 
 <style scoped>
 .container {

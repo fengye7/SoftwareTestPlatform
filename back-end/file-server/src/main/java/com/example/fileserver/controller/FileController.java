@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/files")
 public class FileController {
 
-    private static final String BASE_DIR = "D:\\Files\\Code\\CoursesProjects\\SoftwareTestPlatform\\back-end\\file-server\\src\\main\\resources\\assets\\files";
+    private static final String BASE_DIR = "file-server\\src\\main\\resources\\assets\\files";
 
     @GetMapping("/scripts")
     public List<String> getScripts(@RequestParam String projectName) {

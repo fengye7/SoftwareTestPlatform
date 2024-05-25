@@ -16,6 +16,7 @@
 	<description>back-end</description>
 	<modules>
 		<module>file-server</module>
+		<module>database-server</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>

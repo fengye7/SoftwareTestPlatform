@@ -4,7 +4,7 @@
     
     <!-- 选择测试代码版本 -->
     <div class="form-group">
-      <label for="codeVersion">选择测试代码版本:</label>
+      <label for="codeVersion">1. 选择测试代码版本:</label>
       <select id="codeVersion" v-model="selectedCodeVersion">
         <option v-for="version in codeVersions" :key="version" :value="version">{{ version }}</option>
       </select>
@@ -12,14 +12,14 @@
     
     <!-- 选择新建测试代码传入存储 -->
     <div class="form-group">
-      <label for="newCode">添加测试代码到后台（js文件）:</label>
+      <label for="newCode">附：添加测试代码到后台（js文件）:</label>
       <input type="file" id="newCode" @change="handleNewCode" />
       <button class="upload-button" @click="uploadNewCode">上传测试代码</button>
     </div>
     
     <!-- 选择测试集 -->
     <div class="form-group">
-      <label for="testSet">选择测试集:</label>
+      <label for="testSet">2. 选择测试集:</label>
       <select id="testSet" v-model="selectedTestSet">
         <option v-for="testSet in testSets" :key="testSet" :value="testSet">{{ testSet }}</option>
       </select>
@@ -27,7 +27,7 @@
     
     <!-- 选择传入新的测试集文件（csv格式） -->
     <div class="form-group">
-      <label for="newTestSet">添加测试集文件到后台（csv格式）:</label>
+      <label for="newTestSet">附：添加测试集文件到后台（csv格式）:</label>
       <input type="file" id="newTestSet" @change="handleNewTestSet" accept=".csv" />
       <button class="upload-button" @click="uploadNewTestSet">上传测试集文件</button>
     </div>
@@ -134,18 +134,27 @@ const uploadNewTestSet = async () => {
   }
 };
 
-const startTesting = () => {
+const startTesting = async () => {
   if (!selectedCodeVersion.value || !selectedTestSet.value) {
     alert("请先选择测试脚本和测试集");
     return;
   }
-  console.log("Testing started with:", {
-    selectedCodeVersion: selectedCodeVersion.value,
-    selectedTestSet: selectedTestSet.value,
-  });
-  alert(
-    `开始测试：\n脚本版本：${selectedCodeVersion.value}\n测试集：${selectedTestSet.value}`
-  );
+
+  try {
+    const response = await axios.post('http://localhost:8081/test/start', {
+      projectName: projectName.value,
+      codeVersion: selectedCodeVersion.value,
+      testSet: selectedTestSet.value
+    });
+    
+    // 处理后端返回的测试结果，这里假设后端返回的是一个数组
+    const testResults = response.data;
+    console.log("Test results:", testResults);
+    // 进行测试结果的处理和可视化展示，使用 ECharts 或其他图表库
+  } catch (error) {
+    console.error("Error starting test:", error);
+    alert("开始测试时出错，请稍后重试");
+  }
 };
 </script>
 

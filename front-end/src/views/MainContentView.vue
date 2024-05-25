@@ -23,7 +23,7 @@ const navigateTo = (type, selection) => {
     if (selection === "项目设置") {
       router.push("/project-set");
     } else if (selection === "测试") {
-      router.push(project.value.name !== "未设置项目" ? `/${project.value.name}/ordinary-test` : "/ordinary-test");
+      router.push(project.value.name !== "" ? `/${project.value.name}/ordinary-test` : "/ordinary-test");
     }
     else{
       router.push({name:"NotFound"});
