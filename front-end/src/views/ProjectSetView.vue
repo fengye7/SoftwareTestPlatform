@@ -98,6 +98,7 @@ import axios from "axios";
 
 const store = useStore();
 const selectedProject = computed(() => store.state.project);
+const baseURL = process.env.VUE_APP_API_DatabaseServer_URL;
 
 const dialogVisible = ref(false); // 控制项目创建对话框显示与隐藏
 const projectInfo = reactive({
@@ -132,7 +133,7 @@ const selectProject = (project) => {
 // 获取项目列表
 const getProjects = async () => {
   try {
-    const response = await axios.get("http://localhost:8082/projects"); // 根据实际的后端API路径进行调整
+    const response = await axios.get(`${baseURL}/projects`); // 根据实际的后端API路径进行调整
     projects.value = response.data; // 将获取的项目数据赋值给 projects 数组
   } catch (error) {
     console.error("Failed to fetch projects:", error);
@@ -165,7 +166,7 @@ const createProject = async () => {
     params.append("manager", manager);
     params.append("resource", resource);
 
-    const response = await axios.post("http://localhost:8082/projects", params); // 使用 axios.post 发送 POST 请求，将 projectInfo 数据发送到后端API
+    const response = await axios.post(`${baseURL}/projects`, params); // 使用 axios.post 发送 POST 请求，将 projectInfo 数据发送到后端API
     console.log("Project created successfully:", response.data);
     // 创建项目成功后，您可能需要刷新项目列表以显示新项目
     getProjects(); // 重新获取项目列表
@@ -194,7 +195,7 @@ const createProject = async () => {
   padding: 20px;
   width: 40%;
   margin-right: 5px;
-  font-family: 'fengye7Font';
+  font-family:'Courier New', Courier, monospace;
   color: rgb(43, 43, 123);
   font-size: 1.5em;
 }

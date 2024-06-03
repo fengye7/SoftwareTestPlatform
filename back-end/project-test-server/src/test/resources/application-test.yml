@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://175.178.130.30/microservices?useSSL=false&serverTimezone=UTC
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 1234
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      leak-detection-threshold: 2000
+    jpa:
+      properties:
+        hibernate:
+          database-platform: org.hibernate.dialect.MySQL8Dialect # 配置数据库方言，执行init.sql等
+          dialect:
+            org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    root: DEBUG
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        database-platform: org.hibernate.dialect.MySQL8Dialect # 配置数据库方言，执行init.sql等
+#        dialect:
+#          org.hibernate.dialect.MySQL8Dialect

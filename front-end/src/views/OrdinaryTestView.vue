@@ -2,6 +2,7 @@
   <div class="container">
      <div class="left-panel">
        <!-- 左侧面板的内容 -->
+       <InformationPanel/>
      </div>
      <div class="right-panel">
        <ExerciseControlPanel/>
@@ -11,6 +12,7 @@
 
 <script setup>
 import ExerciseControlPanel from '../components/ExerciseControlPanel.vue';
+import InformationPanel from '../components/InformationPanel.vue'
 </script>
 
 <style scoped>

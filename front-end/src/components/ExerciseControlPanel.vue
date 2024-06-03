@@ -47,6 +47,7 @@ import axios from 'axios';
 // 访问store
 const store = useStore();
 const projectName = computed(() => store.state.project.name);
+const baseURL = process.env.VUE_APP_API_FileServer_URL;
 
 const selectedCodeVersion = ref('');
 const selectedTestSet = ref('');
@@ -63,8 +64,8 @@ onMounted(() => {
 
 const loadFiles = async () => {
   try {
-    const scriptsResponse = await axios.get(`http://localhost:8081/files/scripts?projectName=${projectName.value}`);
-    const testsResponse = await axios.get(`http://localhost:8081/files/tests?projectName=${projectName.value}`);
+    const scriptsResponse = await axios.get(`${baseURL}/files/scripts?projectName=${projectName.value}`);
+    const testsResponse = await axios.get(`${baseURL}/files/tests?projectName=${projectName.value}`);
     codeVersions.value = scriptsResponse.data;
     testSets.value = testsResponse.data;
   } catch (error) {
@@ -99,7 +100,7 @@ const uploadNewCode = async () => {
     formData.append('file', newCodeFile.value);
 
     try {
-      await axios.post('http://localhost:8081/files/uploadScript', formData, {
+      await axios.post(`${baseURL}/files/uploadScript`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -120,7 +121,7 @@ const uploadNewTestSet = async () => {
     formData.append('file', newTestSetFile.value);
 
     try {
-      await axios.post('http://localhost:8081/files/uploadTestSet', formData, {
+      await axios.post(`${baseURL}/files/uploadTestSet`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -141,7 +142,7 @@ const startTesting = async () => {
   }
 
   try {
-    const response = await axios.post('http://localhost:8081/test/start', {
+    const response = await axios.post(`${baseURL}/test/start`, {
       projectName: projectName.value,
       codeVersion: selectedCodeVersion.value,
       testSet: selectedTestSet.value
