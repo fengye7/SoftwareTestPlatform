@@ -5,6 +5,15 @@
     <file url="file://$PROJECT_DIR$/file-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/page-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/product/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/chat-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/file-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/meeting-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/project-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/task-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/teamsphere-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/Microservices/teamsphere-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/project-test-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

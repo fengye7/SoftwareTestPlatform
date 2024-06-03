@@ -1,7 +1,9 @@
 package com.example.databaseserver.controller;
 
 import com.example.databaseserver.entity.Project;
+import com.example.databaseserver.entity.ProjectDetails;
 import com.example.databaseserver.service.ProjectService;
+import com.example.databaseserver.service.dto.ProjectDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +31,10 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable int id) {
         projectService.deleteProject(id);
+    }
+
+    @GetMapping("/project-details")
+    public ProjectDetailsDTO getDetailsByName(@RequestParam String name) {
+        return projectService.getDetailsByName(name);
     }
 }

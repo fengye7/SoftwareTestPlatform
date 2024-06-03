@@ -7,22 +7,44 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="project-test-server" />
         <module name="database-server" />
         <module name="file-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="chat-service" target="17" />
+      <module name="file-service" target="17" />
+      <module name="gateway-service" target="17" />
+      <module name="meeting-service" target="17" />
       <module name="page-server" target="17" />
       <module name="product" target="17" />
+      <module name="project-service" target="17" />
+      <module name="schedule-service" target="17" />
+      <module name="task-service" target="17" />
+      <module name="teamsphere" target="17" />
+      <module name="teamsphere-api" target="17" />
+      <module name="user-service" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="back-end" options="" />
+      <module name="chat-service" options="-parameters" />
       <module name="database-server" options="-parameters" />
       <module name="file-server" options="-parameters" />
+      <module name="file-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="meeting-service" options="-parameters" />
       <module name="page-server" options="-parameters" />
       <module name="product" options="-parameters" />
+      <module name="project-service" options="-parameters" />
+      <module name="project-test-server" options="-parameters" />
+      <module name="schedule-service" options="-parameters" />
+      <module name="task-service" options="-parameters" />
+      <module name="teamsphere" options="-parameters" />
+      <module name="teamsphere-api" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
