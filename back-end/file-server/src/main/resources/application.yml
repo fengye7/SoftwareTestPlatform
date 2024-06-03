@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8091
 
 spring:
   application:
@@ -8,8 +8,13 @@ spring:
 dubbo:
   application:
     name: file-server
+    qos-port: 22222
   registry:
     address: N/A
   protocol:
     name: dubbo
     port: -1
+
+springdoc:
+  swagger-ui:
+    path: /docs.html
