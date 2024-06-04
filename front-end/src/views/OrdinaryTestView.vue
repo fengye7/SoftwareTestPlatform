@@ -12,14 +12,16 @@
 
 <script setup>
 import { computed } from 'vue';
+import { useStore } from 'vuex';
 import InformationPanel from '../components/InformationPanel.vue';
 import TestResult from '../components/TestResult.vue';
 import VisualizationAnalysis from '../components/VisualizationAnalysis.vue';
 import ExerciseControlPanel from '../components/ExerciseControlPanel.vue';
 
-let index = '3';
+const store = useStore();
+const index = computed(()=>store.state.ordinaryTestOptIndex);
 const currentComponent = computed(() => {
-  switch (index) {
+  switch (index.value) {
     case '1':
       return InformationPanel;
     case '2':

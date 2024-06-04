@@ -11,6 +11,7 @@ export default createStore({
     }, // 默认项目为空
     sidebarType: '', // 属于练习还是项目
     sidebarSelection: '', // 侧边栏选择
+    ordinaryTestOptIndex: 1, // 选择的练习测试的内容tab
   },
   getters: {},
   mutations: {
@@ -20,7 +21,10 @@ export default createStore({
     },
     setProject(state, project) {
       state.project = project;
-    },    
+    },
+    updateOrdinaryTestOptIndex(state,index){
+      state.ordinaryTestOptIndex = index;
+    }    
   },
   actions: {},
   modules: {},

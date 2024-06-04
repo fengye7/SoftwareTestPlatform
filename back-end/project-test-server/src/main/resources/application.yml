@@ -4,12 +4,18 @@ dubbo:
     logger: slf4j
     qos-port: 22229
   registry:
-    address: nacos://${nacos.address:127.0.0.1}:8848
+    address: nacos://${nacos_address:175.178.130.30}:8848
+    #    address: nacos://${nacos_address:127.0.0.1}:8848 # 本地nacos
+    group: DEFAULT_GROUP # 服务分组，默认为 DEFAULT_GROUP
   protocol:
     name: dubbo
-    port: 20879
+    port: 20890
   provider:
     timeout: 5000
+    retries: 3 # 设置重试次数
+    load balance: round robin # 负载均衡策略，可选值：random, roundrobin, leastactive
+  consumer:
+    check: false # 在启动时检查服务提供者是否可用
 
 server:
   port: 8090
