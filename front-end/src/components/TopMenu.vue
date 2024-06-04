@@ -17,10 +17,11 @@
       <template #title><strong>欢迎使用SoftwareTestPlatform</strong></template>
     </el-menu-item>
     <!-- 循环渲染菜单项 -->
-    <el-menu-item v-show="sidebarType == '练习'"
+    <el-menu-item v-show="sidebarType == '练习' && projectName!= '未设置项目' && sidebarSelection == '测试'"
       v-for="menuItem in menuItems"
       :key="menuItem.index"
       :index="menuItem.index"
+       @click="handleMenuItemClick(menuItem)"
     >
       {{ menuItem.label }}
     </el-menu-item>
@@ -60,13 +61,16 @@ const navigateTo = (routeName) => {
   router.push({ name: routeName });
 };
 
+// 处理菜单项点击事件
+const handleMenuItemClick = (item) => {
+  console.log(item);
+  store.commit('updateOrdinaryTestOptIndex',item.index);
+}
+
 // 监视侧边栏选择的变化
 watch(sidebarSelection, (newVal) => {
   switch (newVal) {
     case "项目设置":
-      menuItems.value = [
-        { index: "1", label: "项目信息" },
-      ];
       break;
     case "测试":
       menuItems.value = [
