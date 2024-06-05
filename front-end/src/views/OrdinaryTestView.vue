@@ -1,35 +1,41 @@
 <template>
   <div class="container">
     <div class="left-panel">
-      <!-- 左侧面板的内容 -->
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent.component" v-bind="currentComponent.props" />
     </div>
     <div class="right-panel">
-      <ExerciseControlPanel />
+      <ExerciseControlPanel @getTestResults="updateTestResults" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import InformationPanel from '../components/InformationPanel.vue';
 import TestResult from '../components/TestResult.vue';
 import VisualizationAnalysis from '../components/VisualizationAnalysis.vue';
 import ExerciseControlPanel from '../components/ExerciseControlPanel.vue';
 
+const testResults = ref([]);
+
+const updateTestResults = (results) => {
+  testResults.value = results;
+  console.log("父组件：",testResults.value);
+}
+
 const store = useStore();
 const index = computed(()=>store.state.ordinaryTestOptIndex);
 const currentComponent = computed(() => {
   switch (index.value) {
     case '1':
-      return InformationPanel;
+      return { component: InformationPanel, props: {} };
     case '2':
-      return TestResult;
+      return { component: TestResult, props: { responseData: testResults.value } };
     case '3':
-      return VisualizationAnalysis;
+      return { component: VisualizationAnalysis, props: { responseData: testResults.value } };
     default:
-      return InformationPanel;
+      return { component: InformationPanel, props: {} };
   }
 });
 </script>

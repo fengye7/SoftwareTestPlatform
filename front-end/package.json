@@ -20,6 +20,7 @@
     "core-js": "^3.8.3",
     "echarts": "^5.5.0",
     "element-plus": "^2.6.3",
+    "file-saver": "^2.0.5",
     "highlight.js": "^11.9.0",
     "naive-ui": "^2.38.2",
     "typescript": "^5.4.5",
@@ -27,12 +28,15 @@
     "vue-codemirror": "^6.1.1",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0",
-    "x-data-spreadsheet": "^1.1.9"
+    "x-data-spreadsheet": "^1.1.9",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-syntax-jsx": "^7.24.6",
     "@types/codemirror": "^5.60.15",
+    "@vue/babel-plugin-jsx": "^1.2.2",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",

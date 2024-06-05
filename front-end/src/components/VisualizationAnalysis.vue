@@ -1,158 +1,187 @@
 <template>
-  <EChartsWrapper :pieChartOption="pieChartOptionData" :barChartOption="barChartOptionData"
-    :tableOption="tableOptionData" />
+  <EChartsWrapper
+    :pieChartOption="pieChartOptionData"
+    :barChartOption="barChartOptionData"
+    :tableOption="tableOptionData"
+  />
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, watch, defineProps, computed } from "vue";
+import { useStore } from "vuex";
 import axios from "axios";
-import EChartsWrapper from '@/components/EChartsWrapper.vue'
+import EChartsWrapper from "@/components/EChartsWrapper.vue";
 
-const baseURL = process.env.VUE_APP_API_FileServer_URL;
+const baseURL = process.env.VUE_APP_API_DatabaseServer_URL;
+const store = useStore();
+const testSetName = computed(() => store.state.exerciseTest.testSetName);
 
-export default {
-  components: {
-    EChartsWrapper
+// 定义传入的参数
+const props = defineProps({
+  responseData: {
+    type: Array,
+    required: true,
   },
-  data() {
-    return {
-      pieChartOptionData: {  //饼状图数据
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          top: '5%',
-          left: 'center'
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-            dataView: { readOnly: false },
-            //restore: {},
-            //magicType: { type: ['line', 'bar'] }
-          }
-        },
-        series: [
-          {
-            name: 'Access From',
-            type: 'pie',
-            radius: ['0%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: '#fff',
-              borderWidth: 2
-            },
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '40',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              show: false
-            },
-            data: [],
-          }
-        ]
-      },
+});
 
-      barChartOptionData: {  //柱状图数据
-        // title: {
-        //   text: 'Iteration Chart'
-        // },
-        tooltip: {},
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-            dataView: { readOnly: false },
-            restore: {},
-            magicType: { type: ['line', 'bar'] }
-          }
-        },
-        xAxis: {
-          data: []
-        },
-        yAxis: {},
-        series: [{
-          name: 'Iterations',
-          type: 'bar',
-          data: []
-        }]
+// 饼状图数据
+const pieChartOptionData = ref({
+  tooltip: {
+    trigger: "item",
+  },
+  legend: {
+    top: "5%",
+    left: "center",
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {},
+      dataView: { readOnly: false },
+    },
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: ["0%", "70%"],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: "#fff",
+        borderWidth: 2,
       },
+      label: {
+        show: false,
+        position: "center",
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: "40",
+          fontWeight: "bold",
+        },
+      },
+      labelLine: {
+        show: false,
+      },
+      data: [],
+    },
+  ],
+});
 
-      tableOptionData: {  //底部表格数据
-        columns: [],
-        data: []
-      }
+// 柱状图数据
+const barChartOptionData = ref({
+  tooltip: {},
+  toolbox: {
+    feature: {
+      saveAsImage: {},
+      dataView: { readOnly: false },
+      restore: {},
+      magicType: { type: ["line", "bar"] },
+    },
+  },
+  xAxis: {
+    data: [],
+  },
+  yAxis: {},
+  series: [
+    {
+      name: "Iterations",
+      type: "bar",
+      data: [],
+    },
+  ],
+});
+
+// 底部表格数据
+const tableOptionData = ref({
+  columns: [],
+  data: [],
+});
+
+const resultData = ref([]);
+
+// 计算正确数量和总数量
+const correctCount = computed(() => {
+  return resultData.value.filter((item) => item.correctness === "TRUE").length;
+});
+
+const totalCount = computed(() => {
+  return resultData.value.length;
+});
+
+// 更新饼状图数据
+const updatePieChartData = () => {
+  pieChartOptionData.value.series[0].data = [
+    { value: correctCount.value, name: "通过" },
+    { value: totalCount.value - correctCount.value, name: "未通过" },
+  ];
+};
+
+// 更新柱状图数据
+const updateBarChartData = (testHistory) => {
+  const versions = testHistory.map((item) => item.testCode);
+  const correctCounts = testHistory.map((item) => item.correctCount);
+
+  barChartOptionData.value.xAxis.data = versions;
+  barChartOptionData.value.series[0].data = correctCounts;
+};
+
+// 更新表格数据
+const updateTableData = (testHistory) => {
+  const tableData = testHistory.map((item) => ({
+    version: item.testCode,
+    dataset: item.testSet,
+    result: `${item.correctCount}/${item.totalCount}`,
+    defectDescription: item.defectDescription,
+  }));
+
+  tableOptionData.value.data = tableData;
+  tableOptionData.value.columns = [
+    { title: "版本", key: "version" },
+    { title: "测试数据集", key: "dataset" },
+    { title: "测试结果", key: "result" },
+    { title: "缺陷描述", key: "defectDescription" },
+  ];
+};
+
+// 获取测试历史数据
+const fetchTestHistory = () => {
+  axios
+    .get(`${baseURL}/test-results/get-by-testSet?testSet=${testSetName.value}`) // 根据实际后端 API 调整 URL
+    .then((response) => {
+      updateBarChartData(response.data);
+      updateTableData(response.data);
+    })
+    .catch((error) => {
+      console.error("Failed to fetch test history:", error);
+    });
+};
+
+// 监听传递过来的测试结果变化
+watch(
+  () => props.responseData,
+  (newVal) => {
+    resultData.value = newVal;
+    updatePieChartData();
+  },
+  { immediate: true }
+);
+
+// 监听 store 中 testSetName 的变化
+watch(
+  () => testSetName.value,
+  (newVal) => {
+    if (newVal) {
+      fetchTestHistory();
     }
   },
+  { immediate: true }
+);
 
-  created() {
-    this.fetchPieChartData()
-    this.fetchBarChartData()
-    this.fetchTableData()
-  },
-  methods: {
-    fetchPieChartData() {
-      axios.get(`${baseURL}/`)  // 根据实际后端 API 调整 URL
-        .then(response => {
-          let data = response.data;
-          console.log(data);
-          let passedCount = 0;
-          let notPassedCount = 0;
-
-          data = [{ correctness: true }, { correctness: true }, { correctness: false }]
-          // 假设后端返回格式是 [{correctness: true,...},{correctness: true,...},...]
-          // 这样格式的测试结果的字典列表
-          // 统计 Passed 和 Not Passed 的数量
-          data.forEach(item => {
-            if (item.correctness) {
-              passedCount++;
-            } else {
-              notPassedCount++;
-            }
-          });
-
-          // 更新 pieChartOptionData
-          this.pieChartOptionData.series[0].data = [
-            { value: passedCount, name: '通过' },
-            { value: notPassedCount, name: '未通过' }
-          ];
-        })
-        .catch(error => {
-          console.error('Failed to fetch pie chart data:', error);
-        });
-    },
-    fetchBarChartData() {
-      axios.get(`${baseURL}/`)  // 根据实际后端 API 调整 URL
-        .then(response => {
-          console.log(response.data);
-          this.barChartOptionData.xAxis.data = ['1.0版本', '2.0版本', '3.0版本'];
-          this.barChartOptionData.series[0].data = [1, 2, 10];
-        })
-    },
-    fetchTableData() {
-      axios.get(`${baseURL}/`)  // 根据实际后端 API 调整 URL
-        .then(response => {
-          console.log(response.data);
-          this.tableOptionData.data = [
-            { version: 'v1.0', dataset: '强健壮等价类', result: '1/10', defectDescription: 'noob' },
-            { version: 'v2.0', dataset: '强健壮等价类', result: '2/10', defectDescription: 'noob' },
-            { version: 'v3.0', dataset: '强健壮等价类', result: '10/10', defectDescription: 'brilliant' }
-          ];
-          this.tableOptionData.columns = [
-            { title: '版本', key: 'version' },
-            { title: '测试数据集', key: 'dataset' },
-            { title: '测试结果', key: 'result' },
-            { title: '缺陷描述', key: 'defectDescription' }
-          ];
-        })
-    }
-  }
-}
+// 当组件挂载时调用数据获取函数
+onMounted(() => {
+  updatePieChartData();
+  fetchTestHistory();
+});
 </script>

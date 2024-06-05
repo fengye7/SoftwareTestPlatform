@@ -40,9 +40,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import { ElMessage } from 'element-plus';
 
 // 访问store
 const store = useStore();
@@ -135,12 +136,16 @@ const uploadNewTestSet = async () => {
   }
 };
 
+
+const testResults = ref([]);
+const testResultsEmit = defineEmits(["getTestResults"]);
+
 const startTesting = async () => {
   if (!selectedCodeVersion.value || !selectedTestSet.value) {
     alert("请先选择测试脚本和测试集");
     return;
   }
-
+  store.commit("setExerciseTest",{scriptName: selectedCodeVersion.value, testSetName: selectedTestSet.value})
   try {
     const response = await axios.post(`${baseURL}/test/start`, {
       projectName: projectName.value,
@@ -149,9 +154,11 @@ const startTesting = async () => {
     });
     
     // 处理后端返回的测试结果，这里假设后端返回的是一个数组
-    const testResults = response.data;
+    testResults.value = response.data;
     console.log("Test results:", testResults);
-    // 进行测试结果的处理和可视化展示，使用 ECharts 或其他图表库
+    ElMessage.success("测试成功！");
+    // 传出结果到其他组件处理
+    testResultsEmit("getTestResults", testResults.value);
   } catch (error) {
     console.error("Error starting test:", error);
     alert("开始测试时出错，请稍后重试");

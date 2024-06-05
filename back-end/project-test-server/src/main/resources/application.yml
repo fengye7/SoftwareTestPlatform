@@ -2,7 +2,7 @@ dubbo:
   application:
     name: project-test-server
     logger: slf4j
-    qos-port: 22229
+    qos-port: 22221
   registry:
     address: nacos://${nacos_address:175.178.130.30}:8848
     #    address: nacos://${nacos_address:127.0.0.1}:8848 # 本地nacos
