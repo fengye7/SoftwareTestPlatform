@@ -4,7 +4,7 @@ dubbo:
     logger: slf4j
     qos-port: 22221
   registry:
-    address: nacos://${nacos_address:175.178.130.30}:8848
+    address: nacos://${nacos_address:101.42.49.89}:8848
     #    address: nacos://${nacos_address:127.0.0.1}:8848 # 本地nacos
     group: DEFAULT_GROUP # 服务分组，默认为 DEFAULT_GROUP
   protocol:
@@ -22,7 +22,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://175.178.130.30/software_test_db?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://101.42.49.89/software_test_db?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
