@@ -27,11 +27,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>${dubbo.version}</version>
-        </dependency>
         <dependency><!--嵌入式javaScript引擎-->
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>

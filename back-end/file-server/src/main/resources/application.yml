@@ -10,10 +10,10 @@ dubbo:
     name: file-server
     qos-port: 22222
   registry:
-    address: N/A
+    address: nacos://${nacos_address:101.42.49.89}:8848
   protocol:
     name: dubbo
-    port: -1
+    port: 20891
 
 springdoc:
   swagger-ui:

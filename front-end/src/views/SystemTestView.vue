@@ -12,7 +12,6 @@
       </p>
       <h6>上次测试报告</h6>
       <pre>{{ lastTestReport }}</pre>
-      <br />
       <el-divider></el-divider>
       <!--测试结果-->
       <el-button
@@ -225,6 +224,9 @@ const downloadFullOutput = () => {
   height: 85vh;
   width: 100%;
   padding: 20px;
+}
+.left-card {
+  overflow-y: auto;
 }
 
 .left-card:hover,

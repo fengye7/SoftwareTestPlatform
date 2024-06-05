@@ -12,7 +12,6 @@
       </p>
       <h6>上次测试报告</h6>
       <pre>{{ lastTestReport }}</pre>
-      <br />
       <el-divider></el-divider>
       <!--测试结果-->
       <el-button
@@ -230,6 +229,9 @@ const downloadFullOutput = () => {
 .left-card:hover,
 .right-card:hover {
   animation: card-shake 0.1s ease-in-out;
+}
+.left-card {
+  overflow-y: auto;
 }
 
 .console-output {

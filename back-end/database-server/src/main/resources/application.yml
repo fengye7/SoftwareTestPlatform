@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://175.178.130.30/software_test_db?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://101.42.49.89/software_test_db?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
@@ -27,7 +27,7 @@ dubbo:
     name: database-server
     qos-port: 22223
   registry:
-    address: N/A
+    address: nacos://${nacos_address:101.42.49.89}:8848
   protocol:
     name: dubbo
-    port: -1
+    port: 20892
