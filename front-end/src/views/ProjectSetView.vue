@@ -126,7 +126,7 @@ const handleCurrentChange = (page) => {
 const selectProject = (project) => {
   // 选择项目
   // 在此处处理选中项目的逻辑，例如向 Vuex 存储选中的项目信息
-  console.log("选中的项目：", project);
+  // console.log("选中的项目：", project);
   store.commit("setProject", project);
 };
 
