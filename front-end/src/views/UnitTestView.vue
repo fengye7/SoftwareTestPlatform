@@ -236,6 +236,7 @@ const terminateUnitTest = async () => {
 const clearTestInfo = () => {
   output.value = "";
   limitedOutput.value = "";
+  lastTestReport.value = testReport.value;
   testReport.value = "";
   isTestSuccess.value = "等待测试";
   ElMessage.info("测试信息已清除");
@@ -301,6 +302,7 @@ const downloadFullOutput = () => {
 }
 .left-card {
   overflow-y: auto;
+  overflow-x: auto;
 }
 
 .left-card:hover,

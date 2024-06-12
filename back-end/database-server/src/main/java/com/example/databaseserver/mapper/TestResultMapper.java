@@ -12,11 +12,11 @@ public interface TestResultMapper extends BaseMapper<TestResult> {
     @Select("SELECT * FROM test_results WHERE testCode = #{testCode} AND testSet = #{testSet}")
     Optional<TestResult> findByTestCodeAndTestSet(@Param("testCode") String testCode, @Param("testSet") String testSet);
 
-    @Select("SELECT * FROM test_results WHERE testSet = #{testSet}")
-    List<TestResult> findByTestSet(@Param("testSet") String testSet);
+    @Select("SELECT * FROM test_results WHERE projectName = #{projectName} AND testSet = #{testSet}")
+    List<TestResult> findByTestSet(@Param("testSet") String testSet,@Param("projectName") String projectName);
 
-    @Insert("INSERT INTO test_results(testCode, testSet, correctCount, totalCount, defectDescription, describer) " +
-            "VALUES(#{testCode}, #{testSet}, #{correctCount}, #{totalCount}, #{defectDescription}, #{describer})")
+    @Insert("INSERT INTO test_results(testCode, testSet, correctCount, totalCount, defectDescription, describer, projectName) " +
+            "VALUES(#{testCode}, #{testSet}, #{correctCount}, #{totalCount}, #{defectDescription}, #{describer}, #{projectName})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertTestResult(TestResult testResult);
 

@@ -20,7 +20,7 @@ public class TestResultController {
     }
 
     @GetMapping("/get-by-testSet")
-    public List<TestResult> getTestResultsByTestSet(@RequestParam String testSet) {
-        return testResultService.getTestResultsByTestSet(testSet);
+    public List<TestResult> getTestResultsByTestSet(@RequestParam String testSet, @RequestParam String projectName) {
+        return testResultService.getTestResultsByTestSet(testSet, projectName);
     }
 }

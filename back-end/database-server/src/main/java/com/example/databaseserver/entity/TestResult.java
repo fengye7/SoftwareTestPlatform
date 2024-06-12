@@ -24,4 +24,6 @@ public class TestResult {
     private String defectDescription;
 
     private String describer;
+
+    private String projectName;
 }

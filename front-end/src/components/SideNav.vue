@@ -49,10 +49,10 @@
               <el-icon class="nav-icon"><Refresh /></el-icon>
               <el-text v-show="showNav || fixedNav">系统测试</el-text>
             </el-menu-item>
-            <el-menu-item index="2-5" @click="updateSidebarSelection('项目','性能测试')">
+            <!-- <el-menu-item index="2-5" @click="updateSidebarSelection('项目','性能测试')">
               <el-icon class="nav-icon"><TrendCharts /></el-icon>
               <el-text v-show="showNav || fixedNav">性能测试</el-text>
-            </el-menu-item>
+            </el-menu-item> -->
           </el-sub-menu>
         </el-menu>
       </el-container>
@@ -77,7 +77,6 @@ import {
   Document,
   Aim,
   Platform,
-  TrendCharts,
 } from "@element-plus/icons-vue";
 
 const showNav = ref(false);

@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, defineEmits } from 'vue';
+import { ref, computed, onMounted, defineEmits, watch } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
@@ -164,6 +164,18 @@ const startTesting = async () => {
     alert("开始测试时出错，请稍后重试");
   }
 };
+
+// 监视 selectedCodeVersion 和 selectedTestSet 的变化
+watch(selectedCodeVersion,(name)=>{
+  if(name){
+    store.commit("setExerciseTestScript",name);
+  }
+})
+watch(selectedTestSet,(name)=>{
+  if(name){
+    store.commit("setExerciseTestSet",name);
+  }
+})
 </script>
 
 <style scoped>

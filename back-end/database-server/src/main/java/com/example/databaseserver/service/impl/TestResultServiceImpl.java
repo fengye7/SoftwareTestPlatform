@@ -28,7 +28,7 @@ public class TestResultServiceImpl implements TestResultService {
     }
 
     @Override
-    public List<TestResult> getTestResultsByTestSet(String testSet) {
-        return testResultMapper.findByTestSet(testSet);
+    public List<TestResult> getTestResultsByTestSet(String testSet, String projectName) {
+        return testResultMapper.findByTestSet(testSet, projectName);
     }
 }

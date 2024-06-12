@@ -26,6 +26,12 @@ export default createStore({
     setProject(state, project) {
       state.project = project;
     },
+    setExerciseTestScript(state, name) {
+      state.exerciseTest.scriptName = name;
+    },
+    setExerciseTestSet(state, name) {
+      state.exerciseTest.testSetName = name;
+    },
     setExerciseTest(state, test) {
       state.exerciseTest = test;
     },

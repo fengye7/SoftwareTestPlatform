@@ -1,5 +1,7 @@
 package com.example.fileserver.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -100,12 +104,33 @@ public class FileController {
             return "文件未找到。";
         }
         try {
-            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            String content = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
             System.out.println("脚本内容获取成功。");
             return content;
         } catch (IOException e) {
             System.out.println("读取文件内容时出错: " + e.getMessage());
             return "读取文件内容时出错。";
+        }
+    }
+
+    @GetMapping("/testSetContent")
+    public ResponseEntity<String> getDatasetContent(@RequestParam String projectName, @RequestParam String testSetName) {
+        System.out.println("获取项目测试集内容: " + projectName + ", 测试集: " + testSetName);
+        String filePath = BASE_DIR + "/tests/" + projectName + "/" + testSetName;
+        File file = new File(filePath);
+        if (!file.exists() || file.isDirectory()) {
+            System.out.println("文件不存在或是一个目录。");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("文件未找到。");
+        }
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)), Charset.forName("GBK"));
+            System.out.println("测试集内容获取成功。");
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.TEXT_PLAIN)
+                    .body(new String(content.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            System.out.println("读取文件内容时出错: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("读取文件内容时出错。");
         }
     }
 }
