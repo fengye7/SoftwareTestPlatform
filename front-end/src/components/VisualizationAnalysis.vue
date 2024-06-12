@@ -15,6 +15,7 @@ import EChartsWrapper from "@/components/EChartsWrapper.vue";
 const baseURL = process.env.VUE_APP_API_DatabaseServer_URL;
 const store = useStore();
 const testSetName = computed(() => store.state.exerciseTest.testSetName);
+const projectName = computed(() => store.state.project.name);
 
 // 定义传入的参数
 const props = defineProps({
@@ -148,7 +149,7 @@ const updateTableData = (testHistory) => {
 // 获取测试历史数据
 const fetchTestHistory = () => {
   axios
-    .get(`${baseURL}/test-results/get-by-testSet?testSet=${testSetName.value}`) // 根据实际后端 API 调整 URL
+    .get(`${baseURL}/test-results/get-by-testSet?testSet=${testSetName.value}&projectName=${projectName.value}`) // 根据实际后端 API 调整 URL
     .then((response) => {
       updateBarChartData(response.data);
       updateTableData(response.data);

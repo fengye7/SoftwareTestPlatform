@@ -232,6 +232,7 @@ const downloadFullOutput = () => {
 }
 .left-card {
   overflow-y: auto;
+  overflow-x: auto;
 }
 
 .console-output {

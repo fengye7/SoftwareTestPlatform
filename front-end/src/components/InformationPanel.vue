@@ -19,34 +19,55 @@
 
     <div class="test-code">
       <h2>测试代码</h2>
-      <pre><code class="javascript" v-html="formattedTestCode"></code></pre>
+      <pre
+        v-if="scriptCode" style="overflow-x: auto;"
+      ><code class="javascript" v-html="formattedTestCode"></code></pre>
+      <pre v-else>未选择代码</pre>
+    </div>
+
+    <div class="test-dataset">
+      <h2>测试集</h2>
+      <el-table :data="chartData" style="overflow-x: auto;">
+        <el-table-column
+          v-for="header in headers"
+          :key="header"
+          :prop="header"
+          :label="header"
+        ></el-table-column>
+      </el-table>
+      <el-button type="primary" @click="downloadChart"
+        >下载测试集数据</el-button
+      >
     </div>
   </el-card>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, reactive } from "vue";
+import { ref, computed, onMounted, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import axios from "axios";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css"; // 选择一个喜欢的样式
+import { ElMessage } from "element-plus";
 
 // 使用 Vuex 的 store
 const store = useStore();
 // 获取项目名称
 const projectName = computed(() => store.state.project.name);
+const scriptName = computed(() => store.state.exerciseTest.scriptName);
+const testSetName = computed(() => store.state.exerciseTest.testSetName);
 const baseURL = process.env.VUE_APP_API_FileServer_URL;
 const databaseURL = process.env.VUE_APP_API_DatabaseServer_URL;
 
 // 项目信息
 const projectInfo = reactive({
   name: "",
-  sketch:"",
-  thinking:"",
+  sketch: "",
+  thinking: "",
   description: "",
   date: "",
   manager: "",
-  resource: ""
+  resource: "",
 });
 // 代码信息
 const scriptCode = ref("");
@@ -57,20 +78,22 @@ const fetchProjectInfo = async () => {
     const response = await axios.get(
       `${databaseURL}/projects/project-details?name=${projectName.value}`
     );
-    // 更新 projectInfo
-    console.log(response.data);
-
     Object.assign(projectInfo, response.data);
-    console.log(projectInfo);
+    // console.log(projectInfo);
   } catch (error) {
-    console.error("Error fetching project info:", error);
+    ElMessage.error("Error fetching project info:", error);
   }
 };
 
 // 在组件挂载时获取数据
 onMounted(() => {
-  highlightCode();
   fetchProjectInfo();
+  if (scriptName.value) {
+    fetchScriptCode();
+  }
+  if (testSetName.value) {
+    fetchTestSet();
+  }
 });
 
 // 高亮代码
@@ -85,9 +108,10 @@ const highlightCode = () => {
 const fetchScriptCode = async () => {
   try {
     const response = await axios.get(
-      `${baseURL}/files/scriptContent?projectName=判断三角形&scriptName=triangleJudgev0.1.0.js`
+      `${baseURL}/files/scriptContent?projectName=${projectName.value}&scriptName=${scriptName.value}`
     );
     scriptCode.value = response.data;
+    highlightCode();
   } catch (error) {
     console.error("Error fetching scriptCode:", error);
   }
@@ -95,11 +119,81 @@ const fetchScriptCode = async () => {
 
 // 计算属性，用于格式化测试代码
 const formattedTestCode = computed(() => {
-  fetchScriptCode();
   if (scriptCode.value) {
     return scriptCode.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
   return "";
+});
+
+// 监视 scriptName 的变化
+watch(scriptName, (newVal) => {
+  if (newVal) {
+    fetchScriptCode();
+  }
+});
+
+// 图表相关
+const headers = ref([]);
+const chartData = ref([]);
+
+// 解析 CSV 数据
+const parseCSV = (csv) => {
+  const lines = csv.split("\n");
+  const result = [];
+  headers.value = lines[0].split(",");
+
+  for (let i = 1; i < lines.length; i++) {
+    const obj = {};
+    const currentline = lines[i].split(",");
+    for (let j = 0; j < headers.value.length; j++) {
+      obj[headers.value[j]] = currentline[j];
+    }
+    result.push(obj);
+  }
+  return result;
+};
+
+// 获取测试集数据的函数
+const fetchTestSet = async () => {
+  try {
+    const response = await axios.get(
+      `${baseURL}/files/testSetContent?projectName=${projectName.value}&testSetName=${testSetName.value}`
+    );
+    chartData.value = parseCSV(response.data);
+    console.log(chartData.value);
+  } catch (error) {
+    console.error("Error fetching dataset:", error);
+  }
+};
+
+// 监视 testSetName 的变化
+watch(testSetName, (newVal) => {
+  if (newVal) {
+    fetchTestSet();
+  }
+});
+
+// 下载图表数据
+const downloadChart = () => {
+  const csvContent =
+    headers.value.join(",") +
+    "\n" +
+    chartData.value
+      .map((e) => headers.value.map((h) => e[h]).join(","))
+      .join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", "dataset.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+onMounted(() => {
+  fetchProjectInfo();
 });
 </script>
 
@@ -110,11 +204,14 @@ const formattedTestCode = computed(() => {
   padding: 20px;
   box-sizing: border-box;
   background-color: rgb(245, 241, 248);
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .project-description,
 .test-ideas,
-.test-code {
+.test-code,
+.test-dataset {
   margin-top: 20px;
 }
 
@@ -136,5 +233,11 @@ pre {
   padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
+}
+
+.chart {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
 }
 </style>
