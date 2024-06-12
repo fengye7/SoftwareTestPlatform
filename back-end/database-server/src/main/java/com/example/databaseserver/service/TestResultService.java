@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface TestResultService {
     TestResult saveOrUpdateTestResult(TestResult testResult);
-    List<TestResult> getTestResultsByTestSet(String testSet);
+    List<TestResult> getTestResultsByTestSet(String testSet, String projectName);
 }
