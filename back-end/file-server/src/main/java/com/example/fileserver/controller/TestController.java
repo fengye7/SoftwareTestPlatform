@@ -46,7 +46,7 @@ public class TestController {
             engine.eval(reader);
             Invocable invocable = (Invocable) engine;
 
-            List<String> lines = Files.readAllLines(Paths.get(testSetPath), Charset.forName("GBK"));
+            List<String> lines = Files.readAllLines(Paths.get(testSetPath), StandardCharsets.UTF_8);
             if (lines.isEmpty()) {
                 throw new RuntimeException("Test set is empty");
             }
@@ -71,9 +71,8 @@ public class TestController {
                         // 提取参数
                         Object[] args = new Object[expectedOutputIndex - 1];
                         for (int i = 1, j = 0; i < expectedOutputIndex; i++) {
-                            args[j++] = columns[i].trim();
+                            args[j++] = Double.parseDouble(columns[i].trim());
                         }
-                        System.out.println("测试集："+args[0]+' '+args[1]+' '+args[2]);
 
                         try {
                             String actualOutput = (String) invocable.invokeFunction("executeTest", new Object[]{args});

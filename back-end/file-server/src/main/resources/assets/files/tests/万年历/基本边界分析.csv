@@ -1,4 +1,4 @@
-﻿TestCaseID,Year,Month,Day,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
+TestCaseID,Year,Month,Day,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
 1,1900,5,16,1900/5/17,,,,
 2,1901,5,16,1901/5/17,,,,
 3,2100,5,16,2100/5/17,,,,
