@@ -1,5 +1,5 @@
 function calendarProblem3(year, month, day) {
-  var isLeapYear = (year) => {
+  var isLeapYear = function(year) {
     return (year % 400 === 0) || (year % 100 !== 0 && year % 4 === 0);
   };
 
@@ -33,7 +33,7 @@ function calendarProblem3(year, month, day) {
     nextYear++;
   }
 
-  return `${nextYear}/${nextMonth}/${nextDay}`;
+  return nextYear + '/' + nextMonth + '/' + nextDay;
 }
 
 // 统一入口函数
