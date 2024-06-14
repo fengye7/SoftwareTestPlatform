@@ -1,4 +1,4 @@
-﻿TestCaseID,CallingTime,Count,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
+TestCaseID,CallingTime,Count,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
 1,0,3,25,,,,
 2,1,3,25.15,,,,
 3,44630,3,6518.67,,,,
