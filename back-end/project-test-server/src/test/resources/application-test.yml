@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://175.178.130.30/microservices?useSSL=false&serverTimezone=UTC
+    url: jdbc:mariadb://101.42.49.89/microservices?useSSL=false&serverTimezone=UTC
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
