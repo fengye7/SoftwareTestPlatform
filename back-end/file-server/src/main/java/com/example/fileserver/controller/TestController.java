@@ -73,6 +73,7 @@ public class TestController {
                         for (int i = 1, j = 0; i < expectedOutputIndex; i++) {
                             args[j++] = columns[i].trim();
                         }
+                        System.out.println("测试集："+args[0]+' '+args[1]+' '+args[2]);
 
                         try {
                             String actualOutput = (String) invocable.invokeFunction("executeTest", new Object[]{args});

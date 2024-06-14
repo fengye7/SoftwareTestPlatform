@@ -37,6 +37,7 @@ const scriptName = computed(() => store.state.exerciseTest.scriptName);
 const testSetName = computed(() => store.state.exerciseTest.testSetName);
 
 const databaseURL = process.env.VUE_APP_API_DatabaseServer_URL;
+const projectName = computed(() => store.state.project.name);
 
 const props = defineProps({
   responseData: {
@@ -126,7 +127,8 @@ const storeTestResults = async () => {
       correctCount: summaryData.value.correctCount,
       totalCount: summaryData.value.totalCount,
       defectDescription: summaryData.value.defectDescription,
-      describer: summaryData.value.describer
+      describer: summaryData.value.describer,
+      projectName: projectName.value,
     });
     alert('测试结果已存储');
   } catch (error) {

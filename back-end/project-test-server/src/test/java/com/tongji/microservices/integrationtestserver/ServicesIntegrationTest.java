@@ -18,6 +18,7 @@ import com.tongji.microservice.teamsphere.dto.userservice.*;
 import com.tongji.microservice.teamsphere.dubbo.api.*;
 //import com.tongji.microservices.configs.TestContainerConfig;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 //@Testcontainers
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DubboComponentScan(basePackages = "com.tongji.microservice.teamsphere.dubbo.api")
 public class ServicesIntegrationTest {
 
     @DubboReference
