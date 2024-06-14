@@ -1,4 +1,4 @@
-TestCaseID,Host,Monitor,Peripheral,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
+﻿TestCaseID,Host,Monitor,Peripheral,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
 1,1,10,10,77.5,,,,
 2,2,10,10,80,,,,
 3,34,10,10,240,,,,
@@ -12,3 +12,4 @@ TestCaseID,Host,Monitor,Peripheral,ExpectedOutput,ActualOutput,Correctness,Time,
 11,10,10,40,470,,,,
 12,10,10,41,479,,,,
 13,10,10,10,100,,,,
+14,-1,30,30,系统进入统计月度销售额模式,,,,

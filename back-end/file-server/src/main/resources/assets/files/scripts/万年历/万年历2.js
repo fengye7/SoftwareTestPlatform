@@ -33,7 +33,7 @@ function calendarProblem2(year, month, day) {
     nextYear++;
   }
 
-  return `${nextYear}/${nextMonth}/${nextDay}`;
+  return nextYear + '/' + nextMonth + '/' + nextDay;
 }
 
 // 统一入口函数
