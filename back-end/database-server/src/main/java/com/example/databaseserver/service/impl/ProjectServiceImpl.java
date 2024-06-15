@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -34,8 +35,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteProject(int projectId) {
-        projectMapper.deleteProject(projectId);
+    public void modifyProject(String oldName, String newName, String description, LocalDate date, String manager, String resource) {
+        //要符合数据库原则的话，project_details表的name应该是外键约束于project表，假如数据库要改，这里还得改
+        if(!Objects.equals(oldName, newName)) {
+            projectDetailsMapper.changeName(oldName, newName);
+        }
+        projectMapper.modifyProject(oldName, newName, description, date, manager, resource);
+    }
+
+//    @Override
+//    public void deleteProject(int projectId) {
+//        projectMapper.deleteProject(projectId);
+//    }
+
+    @Override
+    public void deleteProject(String name) {
+        //要符合数据库原则的话，project_details表的name应该是外键约束于project表，假如数据库要改，这里还得改
+        projectDetailsMapper.deleteProjectDetails(name);
+        projectMapper.deleteProject(name);
     }
 
     @Override

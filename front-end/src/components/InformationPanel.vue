@@ -192,9 +192,6 @@ const downloadChart = () => {
   URL.revokeObjectURL(url);
 };
 
-onMounted(() => {
-  fetchProjectInfo();
-});
 </script>
 
 <style scoped>
