@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
@@ -123,7 +122,7 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("文件未找到。");
         }
         try {
-            String content = new String(Files.readAllBytes(Paths.get(filePath)), Charset.forName("GBK"));
+            String content = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
             System.out.println("测试集内容获取成功。");
             return ResponseEntity.ok()
                     .contentType(org.springframework.http.MediaType.TEXT_PLAIN)
