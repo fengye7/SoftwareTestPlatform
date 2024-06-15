@@ -30,6 +30,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void insertProject(String name, String description, LocalDate date, String manager, String resource) {
         projectMapper.insertProject(name, description, date, manager, resource);
+        projectDetailsMapper.insertProjectDetails(name, "暂无概述", "暂无思路");
     }
 
     @Override
