@@ -28,10 +28,21 @@ public class ProjectController {
         projectService.insertProject(name, description, date, manager, resource);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProject(@PathVariable int id) {
-        projectService.deleteProject(id);
+    @PostMapping("/modify")
+    public void modifyProject(@RequestParam String oldName, @RequestParam String newName, @RequestParam String description,
+                              @RequestParam LocalDate date, @RequestParam String manager, @RequestParam String resource) {
+        projectService.modifyProject(oldName, newName, description, date, manager, resource);
     }
+
+    @DeleteMapping("/delete")
+    public void deleteProject(@RequestParam String name) {
+        projectService.deleteProject(name);
+    }
+
+//    @DeleteMapping("/{id}")
+//    public void deleteProject(@PathVariable int id) {
+//        projectService.deleteProject(id);
+//    }
 
     @GetMapping("/project-details")
     public ProjectDetailsDTO getDetailsByName(@RequestParam String name) {
