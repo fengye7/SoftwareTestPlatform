@@ -21,11 +21,11 @@ const testResults = ref([]);
 
 const updateTestResults = (results) => {
   testResults.value = results;
-  console.log("父组件：",testResults.value);
+  console.log("父组件：", testResults.value);
 }
 
 const store = useStore();
-const index = computed(()=>store.state.ordinaryTestOptIndex);
+const index = computed(() => store.state.ordinaryTestOptIndex);
 const currentComponent = computed(() => {
   switch (index.value) {
     case '1':
