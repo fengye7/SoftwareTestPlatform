@@ -1,37 +1,40 @@
 <template>
-  <div class="visualization">
-    <n-scrollbar style="max-height: 78vh;">
-      <n-h2>测试情况</n-h2>
-      <div id="pieChart" class="chart"></div>
-      <n-h2>版本迭代</n-h2>
-      <n-card class="description" embedded :bordered="false" content-style="padding: .5em;">
-        <div id="iterationChart" class="chart"></div>
-      </n-card>
-      <n-data-table size="small" :bordered="false" :columns="iterationColumns" :data="iterationTable"></n-data-table>
-    </n-scrollbar>
-  </div>
+  <el-card class="visualization">
+    <h2>测试情况</h2>
+    <div id="pieChart" class="chart"></div>
+    <h2>版本迭代</h2>
+    <el-card class="iteration" :shadow="never">
+      <div id="iterationChart" class="chart"></div>
+    </el-card>
+    <el-table :data="iterationTable" :border="true" :style="{ width: '100%' }">
+      <el-table-column v-for="column in iterationColumns" :key="column.prop" :prop="column.prop"
+        :label="column.label"></el-table-column>
+    </el-table>
+    <el-button type="success" plain @click="downloadCSVChart(
+      iterationColumns.map(c => c.label), iterationTable, '版本迭代数据.csv')">下载表格</el-button>
+  </el-card>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { NScrollbar, NH2, NCard, NDataTable } from 'naive-ui'
 import * as echarts from 'echarts/core'
 import { LineChart, PieChart, BarChart } from 'echarts/charts'
 import { TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, LegendComponent, ToolboxComponent } from 'echarts/components'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 import { defineProps } from 'vue'
+import { downloadCSVChart } from '@/utils/downloadChart'
 
 const props = defineProps({
-  pieChartOption: {  //饼状图
+  pieChartOption: {  // 饼状图
     type: Object,
     required: true
   },
-  barChartOption: {  //柱状图
+  barChartOption: {  // 柱状图
     type: Object,
     required: true
   },
-  tableOption: {  //表格数据
+  tableOption: {  // 表格数据
     type: Object,
     required: true
   },
@@ -58,6 +61,7 @@ const iterationTable = ref([]);
 
 let pieChart = null;
 let iterationChart = null;
+
 
 const initCharts = () => {
   const pieChartContainer = document.getElementById('pieChart');
@@ -101,9 +105,9 @@ const updateTable = () => {
 
 onMounted(initCharts);
 
-//在vue生命周期中子组件创建一次后只会赋值一次，之后父组件数值变化了，子组件数值也变化，
-//但显示的数据不会发生改变。
-//所以需要 watch 来重新赋值
+// 在vue生命周期中子组件创建一次后只会赋值一次，之后父组件数值变化了，子组件数值也变化，
+// 但显示的数据不会发生改变。
+// 所以需要 watch 来重新赋值
 watch(() => props.pieChartOption, updatePieChart, { deep: true });
 watch(() => props.barChartOption, updateBarChart, { deep: true });
 watch(() => props.tableOption, updateTable, { deep: true });
@@ -111,10 +115,12 @@ watch(() => props.tableOption, updateTable, { deep: true });
 
 <style scoped>
 .visualization {
-  width: 90%;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
   box-sizing: border-box;
-  min-height: 83vh;
-  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .chart {
@@ -124,12 +130,13 @@ watch(() => props.tableOption, updateTable, { deep: true });
   /* Ensure the container has enough height */
 }
 
-.description {
+.iteration {
   box-sizing: border-box;
   width: 100%;
+  margin-bottom: 20px;
 }
 
-.n-card {
-  margin-bottom: 20px;
+.el-button {
+  margin-top: 10px;
 }
 </style>

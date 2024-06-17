@@ -1,9 +1,6 @@
 <template>
-  <EChartsWrapper
-    :pieChartOption="pieChartOptionData"
-    :barChartOption="barChartOptionData"
-    :tableOption="tableOptionData"
-  />
+  <EChartsWrapper :pieChartOption="pieChartOptionData" :barChartOption="barChartOptionData"
+    :tableOption="tableOptionData" />
 </template>
 
 <script setup>
@@ -139,10 +136,10 @@ const updateTableData = (testHistory) => {
 
   tableOptionData.value.data = tableData;
   tableOptionData.value.columns = [
-    { title: "版本", key: "version" },
-    { title: "测试数据集", key: "dataset" },
-    { title: "测试结果", key: "result" },
-    { title: "缺陷描述", key: "defectDescription" },
+    { label: "版本", prop: "version" },
+    { label: "测试数据集", prop: "dataset" },
+    { label: "测试结果", prop: "result" },
+    { label: "缺陷描述", prop: "defectDescription" },
   ];
 };
 
