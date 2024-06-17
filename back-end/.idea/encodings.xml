@@ -3,14 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/database-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/file-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/file-server/src/main/resources/assets/files/tests/万年历/决策表.csv" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/file-server/src/main/resources/assets/files/tests/万年历/弱健壮等价类分析.csv" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/file-server/src/main/resources/assets/files/tests/判断三角形/健壮边界值分析.csv" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/file-server/src/main/resources/assets/files/tests/判断三角形/基本边界值分析.csv" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/file-server/src/main/resources/assets/files/tests/判断三角形/弱一般等价类分析.csv" charset="GBK" />
     <file url="file://$PROJECT_DIR$/project-test-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
-    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
