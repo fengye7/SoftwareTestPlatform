@@ -19,25 +19,17 @@
 
     <div class="test-code">
       <h2>测试代码</h2>
-      <pre
-        v-if="scriptCode" style="overflow-x: auto;"
-      ><code class="javascript" v-html="formattedTestCode"></code></pre>
+      <pre v-if="scriptCode" style="overflow-x: auto;"><code class="javascript" v-html="formattedTestCode"></code></pre>
       <pre v-else>未选择代码</pre>
     </div>
 
     <div class="test-dataset">
       <h2>测试集</h2>
       <el-table :data="chartData" style="overflow-x: auto;">
-        <el-table-column
-          v-for="header in headers"
-          :key="header"
-          :prop="header"
-          :label="header"
-        ></el-table-column>
+        <el-table-column v-for="header in headers" :key="header" :prop="header" :label="header"></el-table-column>
       </el-table>
-      <el-button type="primary" @click="downloadChart"
-        >下载测试集数据</el-button
-      >
+      <el-button type="success" plain @click="downloadCSVChart(
+        headers, chartData, testSetName)">下载测试数据集</el-button>
     </div>
   </el-card>
 </template>
@@ -49,6 +41,7 @@ import axios from "axios";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css"; // 选择一个喜欢的样式
 import { ElMessage } from "element-plus";
+import { downloadCSVChart } from '@/utils/downloadChart'
 
 // 使用 Vuex 的 store
 const store = useStore();
@@ -173,24 +166,6 @@ watch(testSetName, (newVal) => {
   }
 });
 
-// 下载图表数据
-const downloadChart = () => {
-  const csvContent =
-    headers.value.join(",") +
-    "\n" +
-    chartData.value
-      .map((e) => headers.value.map((h) => e[h]).join(","))
-      .join("\n");
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  const url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", "dataset.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-};
 
 </script>
 
@@ -236,5 +211,9 @@ pre {
   width: 100%;
   height: 400px;
   margin-top: 20px;
+}
+
+.el-button {
+  margin-top: 10px;
 }
 </style>
