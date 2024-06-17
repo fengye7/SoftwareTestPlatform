@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import org.mozilla.universalchardet.UniversalDetector;
 
 @RestController
 @RequestMapping("/files")
@@ -88,10 +91,52 @@ public class FileController {
     public String uploadTestSet(@RequestParam String projectName, @RequestParam MultipartFile file) throws IOException {
         System.out.println("上传项目测试集: " + projectName);
         String directoryPath = BASE_DIR + "/tests/" + projectName;
-        if (visitDirFolder(file, directoryPath)) return "创建目录失败。";
+
+        if (visitDirFolder(file, directoryPath)) {
+            return "创建目录失败。";
+        }
+
+        // 保存文件到服务器
+        Path filePath = Paths.get(directoryPath, file.getOriginalFilename());
+
+        // 如果文件已经存在，删除文件（或选择不同的策略，例如覆盖文件，或者抛出异常）
+        if (Files.exists(filePath)) {
+            Files.delete(filePath);
+        }
+
+        Files.copy(file.getInputStream(), filePath);
+
+        // 检测并转换文件编码
+        Charset charset = detectCharset(filePath);
+        if (!charset.equals(StandardCharsets.UTF_8)) {
+            // 如果不是UTF-8编码，转换为UTF-8并保存
+            List<String> lines = Files.readAllLines(filePath, charset);
+            Files.delete(filePath);
+            Files.write(filePath, lines, StandardCharsets.UTF_8);
+        }
+
         System.out.println("测试集上传成功: " + file.getOriginalFilename());
         return "测试集上传成功: " + file.getOriginalFilename();
     }
+
+    private Charset detectCharset(Path filePath) throws IOException {
+        byte[] buf = new byte[4096];
+        try (java.io.InputStream fis = Files.newInputStream(filePath)) {
+            UniversalDetector detector = new UniversalDetector(null);
+            int nread;
+            while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+                detector.handleData(buf, 0, nread);
+            }
+            detector.dataEnd();
+            String encoding = detector.getDetectedCharset();
+            if (encoding != null) {
+                return Charset.forName(encoding);
+            } else {
+                return StandardCharsets.UTF_8; // Default to UTF-8
+            }
+        }
+    }
+
 
     @GetMapping("/scriptContent")
     public String getScriptContent(@RequestParam String projectName, @RequestParam String scriptName) {
