@@ -16,7 +16,7 @@ function telecomSystem(callingTime, count) {
     }
 }
 
-//获取折扣档位
+// 获取折扣档位
 function getLevel(time) {
     if (time > 0 && time <= 60)
         return 1;
