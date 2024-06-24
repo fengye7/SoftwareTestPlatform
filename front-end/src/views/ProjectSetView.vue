@@ -3,7 +3,6 @@
     <!-- 左边的卡片 -->
     <el-card class="left-card">
       <h2>当前选择的项目信息</h2>
-      <!-- <div v-if="selectedProject.name != ''"> -->
       <p>项目名称：{{ selectedProject.name }}</p>
       <p>项目管理者：{{ selectedProject.manager }}</p>
       <p>项目描述：{{ selectedProject.description }}</p>
@@ -11,12 +10,6 @@
       <p v-show="selectedProject.resource !== ''">
         项目源地址：{{ selectedProject.resource }}
       </p>
-      <!-- </div> -->
-      <!-- <div v-else>
-        <p>暂未选择项目</p>
-      </div> -->
-
-      <!--这里添加展示更多来自后端的信息-->
     </el-card>
 
     <!-- 右边的卡片 -->
@@ -101,8 +94,8 @@
     <!-- 删除项目对话框 -->
     <el-dialog v-model="deleteDialogVisible" title="删除项目">
       <div v-if=isProjectSeted>
-        <el-form label-width="auto" style="max-width: 600px">
-          <p>您确定要删除项目{{ selectedProject.name }}吗</p>
+        <el-form label-width="auto" style="max-width: 600px;">
+          <p style="font-size: 16px;">您确定要删除项目 {{ selectedProject.name }} 吗？</p>
           <el-form-item>
             <el-button type="primary" @click="deleteProject">删除</el-button>
             <el-button @click="deleteDialogVisible = false">取消</el-button>
@@ -110,7 +103,7 @@
         </el-form>
       </div>
       <div v-else>
-        <p>暂未选择项目！</p>
+        <p style="font-size: 16px;">暂未选择项目！</p>
       </div>
     </el-dialog>
   </div>
@@ -138,7 +131,6 @@ const projectInfo = reactive({
   resource: "", // 项目若开源，可选url
 });
 const projects = ref([]);
-/**项目列表控制 **/
 const currentPage = ref(1);
 const pageSize = 10;
 const totalProjects = computed(() => projects.value.length); // 计算总项目数
@@ -155,7 +147,6 @@ const handleCurrentChange = (page) => {
 const selectProject = (project) => {
   // 选择项目
   // 在此处处理选中项目的逻辑，例如向 Vuex 存储选中的项目信息
-  // console.log("选中的项目：", project);
   store.commit("setProject", project);
   isProjectSeted = true;
 };
@@ -175,19 +166,19 @@ onMounted(() => {
   getProjects();
 });
 
-//点击创建项目按钮
+// 点击创建项目按钮
 const clickCreateProject = async () => {
   clearProjectInfoVar();
   createDialogVisible.value = true;
 };
 
-//点击修改项目按钮
+// 点击修改项目按钮
 const clickModifyProject = async () => {
   setProjectInfoVar();
   modifyDialogVisible.value = true;
 };
 
-//点击删除项目按钮
+// 点击删除项目按钮
 const clickDeleteProject = async () => {
   deleteDialogVisible.value = true;
 };
@@ -251,8 +242,8 @@ const modifyProject = async () => {
     clearProjectInfoVar(); //重置projectInfo变量
     modifyDialogVisible.value = false; // 关闭创建项目对话框
   } catch (error) {
-    console.error("Failed to create project:", error);
-    alert("创建项目失败，API请求失败!!!");
+    console.error("Failed to modify project:", error);
+    alert("修改项目失败，API请求失败!!!");
   }
 };
 
@@ -268,8 +259,8 @@ const deleteProject = async () => {
     getProjects(); // 重新获取项目列表
     deleteDialogVisible.value = false; // 关闭创建项目对话框
   } catch (error) {
-    console.error("Failed to create project:", error);
-    alert("创建项目失败，API请求失败!!!");
+    console.error("Failed to delete project:", error);
+    alert("删除项目失败，API请求失败!!!");
   }
 };
 
@@ -281,7 +272,7 @@ function clearProjectInfoVar() {
   projectInfo.resource = "";
 }
 
-//将projectInfo变量设为selectedProject
+// 将projectInfo变量设为selectedProject
 function setProjectInfoVar() {
   projectInfo.name = selectedProject.value.name;
   projectInfo.description = selectedProject.value.description;
@@ -310,6 +301,8 @@ function setProjectInfoVar() {
   font-family: 'Courier New', Courier, monospace;
   color: rgb(43, 43, 123);
   font-size: 1.5em;
+  /* 垂直滚动条 */
+  overflow-y: auto;
 }
 
 .right-card {
@@ -317,17 +310,16 @@ function setProjectInfoVar() {
   margin-left: 5px;
 }
 
+/* 垂直滚动条，超出max-height时显示 */
 .scroll-container {
   max-height: 60vh;
-  /* 设置最大高度，超出时显示滚动条 */
   overflow-y: auto;
-  /* 垂直滚动条 */
 }
 
 .project-card {
   cursor: pointer;
-  transition: background-color 0.3s;
   /* 添加过渡效果 */
+  transition: background-color 0.3s;
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
@@ -335,14 +327,14 @@ function setProjectInfoVar() {
 }
 
 .project-card:hover {
-  background-color: #3ed0ea;
   /* 悬停时的背景颜色 */
+  background-color: #3ed0ea;
 }
 
 .project-card:active {
-  transform: translateY(2px);
   /* 点击时的垂直位移效果 */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(2px);
   /* 点击时的阴影效果 */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 </style>
