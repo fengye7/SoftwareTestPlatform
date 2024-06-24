@@ -41,12 +41,16 @@ const pieChartOptionData = ref({
     {
       name: "Access From",
       type: "pie",
-      radius: ["0%", "70%"],
+      radius: "70%",
       avoidLabelOverlap: false,
       itemStyle: {
-        borderRadius: 10,
-        borderColor: "#fff",
-        borderWidth: 2,
+        normal: {
+          color: function (params) {
+            // 自定义颜色：绿色、黄色
+            var colorList = ['#91cc75', '#fac858'];
+            return colorList[params.dataIndex]
+          }
+        }
       },
       label: {
         show: false,
