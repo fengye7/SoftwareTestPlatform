@@ -1,0 +1,4 @@
+com\tongji\microservice\teamsphere\scheduleservice\entities\Event.class
+com\tongji\microservice\teamsphere\scheduleservice\mapper\EventMapper.class
+com\tongji\microservice\teamsphere\scheduleservice\TeamsphereScheduleApplication.class
+com\tongji\microservice\teamsphere\scheduleservice\impl\ScheduleServiceImpl.class

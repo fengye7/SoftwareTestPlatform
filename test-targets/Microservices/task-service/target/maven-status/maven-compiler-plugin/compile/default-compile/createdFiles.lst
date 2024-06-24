@@ -1,0 +1,6 @@
+com\tongji\microservice\teamsphere\taskservice\entities\TaskMember.class
+com\tongji\microservice\teamsphere\taskservice\entities\Task.class
+com\tongji\microservice\teamsphere\TeamsphereTaskApplication.class
+com\tongji\microservice\teamsphere\taskservice\impl\TaskServiceImpl.class
+com\tongji\microservice\teamsphere\taskservice\mapper\TaskMapper.class
+com\tongji\microservice\teamsphere\taskservice\mapper\TaskMemberMapper.class

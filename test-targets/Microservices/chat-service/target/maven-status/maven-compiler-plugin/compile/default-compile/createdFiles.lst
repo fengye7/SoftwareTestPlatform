@@ -1,0 +1,12 @@
+com\tongji\microservice\teamsphere\chatservice\socketio\CorsConfig$1.class
+com\tongji\microservice\teamsphere\chatservice\socketio\SocketIOService.class
+com\tongji\microservice\teamsphere\chatservice\entities\GroupMember.class
+com\tongji\microservice\teamsphere\chatservice\socketio\SocketIOConfig.class
+com\tongji\microservice\teamsphere\chatservice\mapper\GroupMemberMapper.class
+com\tongji\microservice\teamsphere\chatservice\entities\GroupChat.class
+com\tongji\microservice\teamsphere\chatservice\util\MongoDB.class
+com\tongji\microservice\teamsphere\chatservice\TeamsphereChatApplication.class
+com\tongji\microservice\teamsphere\chatservice\mapper\GroupMapper.class
+com\tongji\microservice\teamsphere\chatservice\entities\MessageObject.class
+com\tongji\microservice\teamsphere\chatservice\socketio\CorsConfig.class
+com\tongji\microservice\teamsphere\chatservice\impl\ChatServiceImpl.class
