@@ -7,11 +7,13 @@ function telecomSystem(callingTime, count) {
     }
 
     var maxNum = [1, 2, 3, 3, 6];
+    var discountRate = [0.01, 0.015, 0.02, 0.025, 0.03];
     var level = getLevel(callingTime);
-    if (count <= maxNum[level]) {
-        return String((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)));
+
+    if (count <= maxNum[level - 1]) {
+        return String(Math.round((25 + 0.15 * callingTime * (1 - discountRate[level - 1]))*100)/100);
     } else {
-        return String((25 + 0.15 * callingTime));
+        return String(Math.round((25 + 0.15 * callingTime) * 100) / 100);
     }
 }
 
