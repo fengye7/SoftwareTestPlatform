@@ -19,7 +19,7 @@
 
     <div class="test-code">
       <h2>测试代码</h2>
-      <pre v-if="scriptCode" style="overflow-x: auto;"><code class="javascript" v-html="formattedTestCode"></code></pre>
+      <pre v-if="scriptCode" style="overflow-x: auto; font-size: 16px;"><code class="javascript" v-html="formattedTestCode"></code></pre>
       <pre v-else>未选择代码</pre>
     </div>
 
@@ -38,7 +38,7 @@
 import { ref, computed, onMounted, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import axios from "axios";
-import hljs from "highlight.js";
+import highlight from "highlight.js";
 import "highlight.js/styles/github.css"; // 选择一个喜欢的样式
 import { ElMessage } from "element-plus";
 import { downloadCSVChart } from '@/utils/downloadChart'
@@ -72,7 +72,6 @@ const fetchProjectInfo = async () => {
       `${databaseURL}/projects/project-details?name=${projectName.value}`
     );
     Object.assign(projectInfo, response.data);
-    // console.log(projectInfo);
   } catch (error) {
     ElMessage.error("Error fetching project info:", error);
   }
@@ -89,14 +88,6 @@ onMounted(() => {
   }
 });
 
-// 高亮代码
-const highlightCode = () => {
-  const codeElement = document.querySelector("pre code");
-  if (codeElement) {
-    hljs.highlightElement(codeElement);
-  }
-};
-
 // 获取项目详细信息的函数
 const fetchScriptCode = async () => {
   try {
@@ -104,18 +95,18 @@ const fetchScriptCode = async () => {
       `${baseURL}/files/scriptContent?projectName=${projectName.value}&scriptName=${scriptName.value}`
     );
     scriptCode.value = response.data;
-    highlightCode();
   } catch (error) {
     console.error("Error fetching scriptCode:", error);
   }
 };
 
-// 计算属性，用于格式化测试代码
+// 格式化和高亮测试代码
 const formattedTestCode = computed(() => {
   if (scriptCode.value) {
-    return scriptCode.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    scriptCode.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
-  return "";
+  const { value } = highlight.highlight('js', scriptCode.value)
+  return value;
 });
 
 // 监视 scriptName 的变化

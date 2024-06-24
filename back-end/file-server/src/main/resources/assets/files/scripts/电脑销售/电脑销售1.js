@@ -12,6 +12,7 @@ function computerSelling(host, monitor, peripheral) {
     if (peripheral > 90) {
         return "数据非法，外设销售数量不能超过90";
     }
+    // 忘记了统计月度销售额模式
 
     var totalSales = host * 25 + monitor * 30 + peripheral * 45;
     if (totalSales <= 1000) {

@@ -1,42 +1,42 @@
 function calendarProblem3(year, month, day) {
-  var isLeapYear = function(year) {
-    return (year % 400 === 0) || (year % 100 !== 0 && year % 4 === 0);
-  };
+    // 正确判断年份和月份范围
+    if (year < 1900 || year > 2100) {
+        return "年份数值越界";
+    }
+    if (month <= 0 || month > 12) {
+        return "月份数值越界";
+    }
 
-  if (year < 1900 || year > 2100) {
-    return "年份数值越界";
-  }
-  if (month < 1 || month > 12) {
-    return "月份数值越界";
-  }
+    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var isLeap = 0;
+    if (year % 400 == 0) {
+        isLeap = 1;
+    } else if (year % 100 != 0 && year % 4 == 0) {
+        isLeap = 1;
+    }
 
-  var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  if (isLeapYear(year)) {
-    monthDays[1] = 29;
-  }
+    monthDays[1] += isLeap;
+    var maxDays = monthDays[month - 1];
+    // 正确判断日期范围
+    if (day <= 0 || day > maxDays) {
+        return "日期数值越界";
+    }
 
-  var maxDays = monthDays[month - 1];
-  if (day < 1 || day > maxDays) {
-    return "日期数值越界";
-  }
+    var result = [year, month, day + 1];
 
-  var nextYear = year;
-  var nextMonth = month;
-  var nextDay = day + 1;
-
-  if (nextDay > maxDays) {
-    nextDay = 1;
-    nextMonth++;
-  }
-  if (nextMonth > 12) {
-    nextMonth = 1;
-    nextYear++;
-  }
-
-  return nextYear + '/' + nextMonth + '/' + nextDay;
+    if (day == maxDays) {
+        result[2] = 1;
+        result[1]++;
+    }
+    // 正确处理年份进位
+    if (result[1] > 12) {
+        result[1] = 1;
+        result[0]++;
+    }
+    return result[0] + "/" + result[1] + "/" + result[2];
 }
 
 // 统一入口函数
 function executeTest(args) {
-  return calendarProblem3.apply(null, args);
+    return calendarProblem3.apply(null, args);
 }
