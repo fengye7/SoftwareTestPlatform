@@ -1,0 +1,5 @@
+com\tongji\microservice\teamsphere\userservice\impl\UserServiceImpl.class
+com\tongji\microservice\teamsphere\userservice\util\Jwt.class
+com\tongji\microservice\teamsphere\TeamsphereUserApplication.class
+com\tongji\microservice\teamsphere\userservice\entities\User.class
+com\tongji\microservice\teamsphere\userservice\mapper\UserMapper.class

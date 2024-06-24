@@ -1,0 +1,9 @@
+com\tongji\microservice\teamsphere\meetingservice\impl\MeetingServiceImpl.class
+com\tongji\microservice\teamsphere\meetingservice\client\FeishuAPIClient.class
+com\tongji\microservice\teamsphere\meetingservice\client\MeetingBackData.class
+com\tongji\microservice\teamsphere\meetingservice\mapper\MeetingMapper.class
+com\tongji\microservice\teamsphere\meetingservice\entities\MeetingParticipants.class
+com\tongji\microservice\teamsphere\meetingservice\TeamsphereMeetingApplication.class
+com\tongji\microservice\teamsphere\meetingservice\utils\TokenFetcher.class
+com\tongji\microservice\teamsphere\meetingservice\entities\Meeting.class
+com\tongji\microservice\teamsphere\meetingservice\mapper\MeetingParticipantsMapper.class

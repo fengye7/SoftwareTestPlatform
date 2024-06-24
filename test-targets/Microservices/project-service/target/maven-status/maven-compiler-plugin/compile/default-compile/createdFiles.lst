@@ -1,0 +1,8 @@
+com\tongji\microservice\teamsphere\projectservice\entities\ProjectMemberRequest.class
+com\tongji\microservice\teamsphere\projectservice\entities\Project.class
+com\tongji\microservice\teamsphere\projectservice\entities\ProjectMember.class
+com\tongji\microservice\teamsphere\projectservice\mapper\ProjectMemberMapper.class
+com\tongji\microservice\teamsphere\projectservice\mapper\ProjectMemberRequestMapper.class
+com\tongji\microservice\teamsphere\TeamsphereProjectApplication.class
+com\tongji\microservice\teamsphere\projectservice\impl\ProjectServiceImpl.class
+com\tongji\microservice\teamsphere\projectservice\mapper\ProjectMapper.class

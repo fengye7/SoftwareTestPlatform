@@ -1,0 +1,11 @@
+com\tongji\microservice\teamsphere\gatewayservice\controller\ProjectController.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\ChatController.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\MeetingController.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\FileController.class
+com\tongji\microservice\teamsphere\gatewayservice\TeamsphereGatewayApplication.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\ScheduleController.class
+com\tongji\microservice\teamsphere\gatewayservice\SwaggerConfig.class
+com\tongji\microservice\teamsphere\gatewayservice\util\Loader.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\UserController.class
+com\tongji\microservice\teamsphere\gatewayservice\controller\TaskController.class
+com\tongji\microservice\teamsphere\gatewayservice\CrosConfig.class

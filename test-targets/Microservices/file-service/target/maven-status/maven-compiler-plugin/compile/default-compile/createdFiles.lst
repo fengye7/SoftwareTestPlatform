@@ -1,0 +1,7 @@
+com\tongji\microservice\teamsphere\fileservice\entities\Star.class
+com\tongji\microservice\teamsphere\fileservice\mapper\FileMapper.class
+com\tongji\microservice\teamsphere\fileservice\mapper\StarMapper.class
+com\tongji\microservice\teamsphere\fileservice\entities\FileInfo.class
+com\tongji\microservice\teamsphere\fileservice\impl\FileServiceImpl.class
+com\tongji\microservice\teamsphere\fileservice\util\Loader.class
+com\tongji\microservice\teamsphere\fileservice\TeamsphereFileApplication.class
